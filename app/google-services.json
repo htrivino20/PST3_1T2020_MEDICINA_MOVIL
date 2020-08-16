@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "214800588026",
+    "firebase_url": "https://medicinamovil-6446c.firebaseio.com",
+    "project_id": "medicinamovil-6446c",
+    "storage_bucket": "medicinamovil-6446c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214800588026:android:2d5afadbb9b157f2adbd43",
+        "android_client_info": {
+          "package_name": "com.example.medicinamovil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214800588026-2d1ve59to6n8cs1l2aj321gb8ln1gk5e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medicinamovil",
+            "certificate_hash": "cff17b481888423ed1b3577ed0390cffd9991829"
+          }
+        },
+        {
+          "client_id": "214800588026-hj17114dqtfrffk9bmu4ijn0bhsq9bkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIfrXUquQnhYdmLQPUcEnil6calghfek4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214800588026-hj17114dqtfrffk9bmu4ijn0bhsq9bkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
