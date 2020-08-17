@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.medicinamovil.Fragments.FragmentHome;
+import com.example.medicinamovil.Fragments.FragmentCalendario;
 import com.example.medicinamovil.Fragments.FragmentPerfil;
 import com.example.medicinamovil.Fragments.FragmentSolicitud;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,10 +30,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavi = findViewById(R.id.bottom_navigation);
         bottomNavi.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentHome()).commit();
-
-
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentCalendario()).commit();
 
     }
 
@@ -50,10 +47,10 @@ public class PrincipalActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selecFragment = null;
             switch (item.getItemId()){
-                case R.id.nav_list:
-                    selecFragment = new FragmentHome();
+                case R.id.nav_scheldule:
+                    selecFragment = new FragmentCalendario();
                     break;
-                case R.id.nav_category:
+                case R.id.nav_sms:
                     selecFragment = new FragmentSolicitud();
                     break;
                 case R.id.nav_profile:
@@ -75,7 +72,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //ProfileFragment.setInfoUser(idUsuario,usuarios.get(idUsuario));
         // El de arriba es el que debe ir, pongo el de abajo para que no tengan que ubicar el nombre del usuario en login
         // Porque si no ponen el usuario se les cae el programa
-        ProfileFragment.setInfoUser("htrivino",usuarios.get("htrivino"));
+        //ProfileFragment.setInfoUser("htrivino",usuarios.get("htrivino"));
 
     }
 
