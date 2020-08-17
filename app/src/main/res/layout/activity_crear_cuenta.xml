@@ -10,36 +10,37 @@
         android:id="@+id/etContrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/ingrese_contrase_a"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCedula"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/textCedula" />
 
     <EditText
         android:id="@+id/textCedula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/n_mero_de_c_dula"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/buttonRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/button"
+        android:layout_marginTop="208dp"
+        android:text="@string/continuar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
         tools:text="Continuar" />
@@ -48,23 +49,23 @@
         android:id="@+id/etContrasena2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/repita_su_contrase_a"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etContrasena"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/etContrasena" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="80dp"
-        android:text="@string/button"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/regresar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
         tools:text="Regresar" />
@@ -73,13 +74,26 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="52dp"
         android:text="@string/textview"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Registro" />
+        tools:text="Registro Paciente" />
+
+    <EditText
+        android:id="@+id/textCuarto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/cuarto"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

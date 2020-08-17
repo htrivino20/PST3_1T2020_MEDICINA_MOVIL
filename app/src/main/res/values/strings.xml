@@ -6,4 +6,9 @@
     <string name="textview">TextView</string>
     <string name="repita_su_contrase_a">Repita su contraseña</string>
     <string name="ingrese_contrase_a">Ingrese contraseña</string>
+    <string name="continuar">continuar</string>
+    <string name="regresar">regresar</string>
+    <string name="cuarto"># Cuarto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -8,20 +8,22 @@ import android.widget.EditText;
 
 public class usuario {
     //Atributos de la clase usuario
-    String claseId;
+
     String cedula;
     String  contrasena;
+    String cargo;
+    String habitacion;
 
-    public usuario(String claseId, String cedula, String contrasena) {
-        this.claseId = claseId;
+    public usuario(String cedula, String contrasena, String cargo,String habitacion) {
+
         this.cedula = cedula;
         this.contrasena = contrasena;
+        this.cargo = cargo;
+        this.habitacion= habitacion;
 
     }
 
-    public String getClaseId() {
-        return claseId;
-    }
+
 
     public String getCedula() {
         return cedula;
@@ -30,5 +32,10 @@ public class usuario {
     public String getContrasena() {
         return contrasena;
     }
+
+    public String getCargo() { return cargo; }
+
+    public String getHabitacion() { return habitacion; }
+
 
 }

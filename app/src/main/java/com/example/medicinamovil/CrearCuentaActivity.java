@@ -17,7 +17,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
     //DATOS ENVIADOS A LA BASE DE DATOS EN FIREBASE
 //Declaracion de los  objetos
     EditText txtCedula;
-
+    EditText txtHabitacion;
     EditText txtContrasena;
     Button btnRegistrar;
 
@@ -28,29 +28,38 @@ public class CrearCuentaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
+
+        //instaciando el objeto que se enviara a la base de datos en este caso se enviara un obketo de tipo usaurio
+
         dataUsuario = FirebaseDatabase.getInstance().getReference("usuario");
+
+        //Relacionaod la parte grafica  y logica
 
         txtCedula= (EditText)findViewById(R.id.textCedula);
         txtContrasena=(EditText)findViewById(R.id.etContrasena);
+        txtHabitacion=(EditText)findViewById(R.id.textCuarto);
 
+        //asigndo de metodo onclibk para subir los datos a la nube
         btnRegistrar=(Button)findViewById(R.id.buttonRegistrar);
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registrarClase();
+                registrarusuario();
             }
         });
 
     }
 
-    public void registrarClase(){
+    public void registrarusuario(){
         String cedula=txtCedula.getText().toString();
         String contrasena=txtContrasena.getText().toString();
+        String habitacion=txtHabitacion.getText().toString();
 
         if (!TextUtils.isEmpty(cedula)){
-            String id = dataUsuario.push().getKey();
-            usuario usuario1=new usuario(id,cedula,contrasena);
-            dataUsuario.child("Usuarios").child(id).setValue(usuario1);
+            //String id = dataUsuario.push().getKey();
+            usuario usuario1=new usuario(cedula,contrasena,"Paciente",habitacion);
+            dataUsuario.child(cedula).setValue(usuario1);
+           // dataUsuario.child("Usuarios").child(id).setValue(usuario1);
             Toast toast = Toast.makeText(getApplicationContext(),"Se ha creado su cuenta!",Toast.LENGTH_LONG);
             toast.show();
 
