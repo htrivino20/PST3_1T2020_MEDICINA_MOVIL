@@ -23,6 +23,8 @@ public class usuario {
 
     }
 
+    public usuario() {
+    }
 
 
     public String getCedula() {
