@@ -10,33 +10,36 @@
         android:id="@+id/etContrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
-        android:hint="Ingrese contraseña"
+        android:hint="@string/ingrese_contrase_a"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCedula" />
+        app:layout_constraintTop_toBottomOf="@+id/textCedula"
+        android:autofillHints="" />
 
     <EditText
-        android:id="@+id/etCedula"
+        android:id="@+id/textCedula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:hint="Número de cédula"
+        android:hint="@string/n_mero_de_c_dula"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:autofillHints="" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:text="Button"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
         tools:text="Continuar" />
@@ -45,21 +48,23 @@
         android:id="@+id/etContrasena2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
-        android:hint="Repita su contraseña"
+        android:hint="@string/repita_su_contrase_a"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etContrasena" />
+        app:layout_constraintTop_toBottomOf="@+id/etContrasena"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:text="Button"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
         tools:text="Regresar" />
@@ -68,10 +73,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:text="TextView"
+        android:layout_marginTop="64dp"
+        android:text="@string/textview"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Registro" />
