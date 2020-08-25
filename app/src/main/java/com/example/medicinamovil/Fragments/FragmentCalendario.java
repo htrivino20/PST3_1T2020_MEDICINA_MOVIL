@@ -7,8 +7,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.medicinamovil.R;
+
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +29,19 @@ import com.example.medicinamovil.R;
  * create an instance of this fragment.
  */
 public class FragmentCalendario extends Fragment {
+    TextView fecha;
+    ListView listaMedicamentosDiarios;
+    private String[] header={"Medicamentos", "Hora","Estado"};
+    private ArrayList<String[]> rows= new ArrayList<>();
+
+    String[][] datos={
+            {"Paracetamol","8 am","Pendiente"},
+            {"Ibuprofeno","10 am","Entregado"},
+            {"Trileptal","10 am","Entregado"},
+            {"Acnotin","12 am","Pendiente"},
+            {"Norlevo","1 pm","Pendiente"}
+    };
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +86,18 @@ public class FragmentCalendario extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendario, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendario, container, false);
+        //Actualizacion de fecha
+        fecha=(TextView) view.findViewById(R.id.tvFecha);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String fechaFormato = df.format(Calendar.getInstance().getTime());
+        fecha.setText(fechaFormato);
+
+        //LisView de medicamentos
+        listaMedicamentosDiarios=(ListView) view.findViewById(R.id.lvMedicamentosDiarios);
+        listaMedicamentosDiarios.setAdapter(new Adaptador(view.getContext(), datos));
+        return view;
     }
+
+
 }

@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 
 import com.example.medicinamovil.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +24,11 @@ public class FragmentSolicitud extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private ArrayList<String[]> rows= new ArrayList<>();
+    private String[] header={"Medicamentos", "Hora","Estado"};
+    private TableLayout tableLayout;
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +69,35 @@ public class FragmentSolicitud extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_solicitud, container, false);
+        View view = inflater.inflate(R.layout.fragment_solicitud, container, false);
+
+        //Mostrar medicamentos diarios
+        agregarMedicamentos();
+        //tableLayout=(TableLayout) view.findViewById(R.id.tablaMedicamentos);
+        //TablaDinamica tableDynamic=new TablaDinamica(tableLayout, container.getContext());
+        //tableDynamic.addHeader(header);
+
+        //tableDynamic.addData(rows);
+
+
+
+
+        return view;
+    }
+
+    public void agregarMedicamentos(){
+        String[] receta1={"Paracetamol","8 am","Pendiente"};
+        String[] receta2={"Ibuprofeno","10 am","Entregado"};
+        String[] receta3={"Trileptal","10 am","Entregado"};
+        String[] receta4={"Acnotin","12 am","Pendiente"};
+        String[] receta5={"Pastilla5","1 pm","Pendiente"};
+
+        rows.add(receta1);
+        rows.add(receta2);
+        rows.add(receta3);
+        rows.add(receta4);
+        rows.add(receta5);
+
+
     }
 }
