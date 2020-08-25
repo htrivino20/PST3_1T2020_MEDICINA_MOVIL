@@ -11,18 +11,36 @@ public class Usuario {
     private String cargo;
     private String cedula;
     private String  contrasena;
-    private int habitacion;
-    private int solicitudEstado;
+    private int numeroHabitacion;
 
-    public Usuario(String cargo, String cedula, String contrasena, int habitacion, int solicitudEstado) {
+    public Usuario(String cargo, String cedula, String contrasena) {
         this.cargo = cargo;
         this.cedula = cedula;
         this.contrasena = contrasena;
-        this.habitacion = habitacion;
-        this.solicitudEstado = solicitudEstado;
     }
 
+    public Usuario(String cargo, String cedula, String contrasena, int numeroHabitacion) {
+        this.cargo = cargo;
+        this.cedula = cedula;
+        this.contrasena = contrasena;
+        this.numeroHabitacion = numeroHabitacion;
+    }
+
+
+
     public Usuario() {
+    }
+
+    public boolean equals(Object obj){
+        if(obj!= null){
+            if(obj instanceof Usuario){
+                Usuario u = (Usuario)obj;
+                if(this.getCedula() == u.getCedula()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
@@ -50,19 +68,5 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public int getHabitacion() {
-        return habitacion;
-    }
 
-    public void setHabitacion(int habitacion) {
-        this.habitacion = habitacion;
-    }
-
-    public int getSolicitudEstado() {
-        return solicitudEstado;
-    }
-
-    public void setSolicitudEstado(int solicitudEstado) {
-        this.solicitudEstado = solicitudEstado;
-    }
 }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.medicinamovil.Fragments.FragmentPerfil;
+import com.example.medicinamovil.ObjetosNat.Habitacion;
 import com.example.medicinamovil.ObjetosNat.Usuario;
 import com.example.medicinamovil.ObjetosNat.Variables;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CrearCuentaActivity extends AppCompatActivity {
 
@@ -29,7 +32,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
     EditText txtContrasena;
     Button btnRegistrar;
     Usuario user;
-    String cargo = "Paciente";
+    String cargo = "Encargado";
     int solicitudEstado = 0;
     //Declaramos la variable publica de referencia a la base de datos
     private DatabaseReference databaseReference;
@@ -39,7 +42,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
         iniciarVariables();
-        solicitarDatosFirebase();
+       // solicitarDatosFirebase();
 
 
     }
@@ -51,81 +54,79 @@ public class CrearCuentaActivity extends AppCompatActivity {
 
         txtCedula = (EditText) findViewById(R.id.textCedula);
         txtContrasena = (EditText) findViewById(R.id.etContrasena);
-        txtHabitacion = (EditText) findViewById(R.id.textCuarto);
+      //  txtHabitacion = (EditText) findViewById(R.id.textCuarto);
 
     }
 
-    //Metodo para solicitar datos en Firebase del usuario
+    //Metodo que registra el usuario
+    public void registrarUsuario(View view) {
+        DatabaseReference usuarios = databaseReference.child(Variables.USUARIO_FI);
+        usuarios.addValueEventListener(new ValueEventListener() {
+            String cedula = txtCedula.getText().toString();
+            String contrasena = txtContrasena.getText().toString();
+            Usuario usuario = new Usuario(cargo,cedula,contrasena);
 
-    private void solicitarDatosFirebase() {
-        //consultar los datos a nuestra base de datos
-        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    databaseReference.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            user = dataSnapshot.getValue(Usuario.class);
-                            String cedula = user.getCedula();
-                            String cargo = user.getCargo();
-                           // String habitacion = user.getHabitacion();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()
+                     ) {
+                    Usuario userD = snapshot.getValue(Usuario.class);
+                    if(userD.equals(usuario)){
+                        System.out.println(userD.equals(usuario));
+                        Context context = getApplicationContext();
+                        CharSequence text = "Ya esta registrado";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
-                            //Revision de recibo de datos
+                    }else {
+                        cargo = "Paciente";
+                        Habitacion hAsignar = asignarHabitacion();
+                        //usuario.setCargo(cargo);
+                        Usuario usuarioPaciente = new Usuario(cargo,cedula,contrasena,hAsignar.getNumeroHabitacion());
+                        databaseReference.child(Variables.USUARIO_FI).child(usuario.getCedula()).setValue(usuario);
+                        Context context = getApplicationContext();
+                        CharSequence text = "Registrado";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
-                           // Log.e("NombreUsuario; ", cedula);
-                           // Log.e("CARGO; ", cargo);
-                           // Log.e("NumeroHabitacion; ", habitacion);
+                    }
 
-
-                            //Log.e("NombreUsuario; ",snapshot.getValue());
-
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
                 }
 
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
 
+    public Habitacion asignarHabitacion(){
+        final ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
 
-    //Metodo que registra el usuario
-    public void registrarUsuario(View view) {
-        String cedula = txtCedula.getText().toString();
-        String contrasena = txtContrasena.getText().toString();
-        int habitacion = Integer.parseInt(txtHabitacion.getText().toString());
-        Usuario usuario = new Usuario(cargo,cedula,contrasena,habitacion,solicitudEstado);
-        DatabaseReference usuarios = databaseReference.child(Variables.USUARIO_FI);
-        usuarios.child(usuario.getCedula()).setValue(usuario);
-        Context context = getApplicationContext();
-        CharSequence text = "Registrado";
-        int duration = Toast.LENGTH_SHORT;
+        DatabaseReference habitaciones = databaseReference.child(Variables.HABITACIONES_FI);
+        habitaciones.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               for (DataSnapshot snap: dataSnapshot.getChildren()){
+                   Habitacion h = snap.getValue(Habitacion.class);
+                   if(h.getOcupada() == 0){
+                       habitacionesDisponibles.add(h);
+                   }
+               }
+            }
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-        //usuarios.child();
-        //  if (!TextUtils.isEmpty(cedula)) {
-            //String id = dataUsuario.push().getKey();
-           // Usuario usuario1 = new Usuario(cedula, contrasena, "Paciente", habitacion);
-            //dataUsuario.child(cedula).setValue(usuario1);
-            // dataUsuario.child("Usuarios").child(id).setValue(usuario1);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        //}
-
+            }
+        });
+        Habitacion habitacionDisponible = habitacionesDisponibles.get(0);
+        return habitacionDisponible;
     }
-
 
     public void regresar(View view) {
         finish();
