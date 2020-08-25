@@ -3,16 +3,17 @@ package com.example.medicinamovil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.medicinamovil.Fragments.FragmentPerfil;
+import com.example.medicinamovil.ObjetosNat.Usuario;
+import com.example.medicinamovil.ObjetosNat.Variables;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,18 +28,24 @@ public class CrearCuentaActivity extends AppCompatActivity {
     EditText txtHabitacion;
     EditText txtContrasena;
     Button btnRegistrar;
-    usuario user;
+    Usuario user;
+    String cargo = "Paciente";
+    int solicitudEstado = 0;
     //Declaramos la variable publica de referencia a la base de datos
-    private DatabaseReference dataUsuario;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
+        iniciarVariables();
+        solicitarDatosFirebase();
 
-        //instaciando el objeto que se enviara a la base de datos en este caso se enviara un obketo de tipo usaurio
 
-        dataUsuario = FirebaseDatabase.getInstance().getReference("usuario");
+    }
+
+    public void iniciarVariables(){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Relacionaod la parte grafica  y logica
 
@@ -46,34 +53,23 @@ public class CrearCuentaActivity extends AppCompatActivity {
         txtContrasena = (EditText) findViewById(R.id.etContrasena);
         txtHabitacion = (EditText) findViewById(R.id.textCuarto);
 
-        //asigndo de metodo onclibk para subir los datos a la nube
-        btnRegistrar = (Button) findViewById(R.id.buttonRegistrar);
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registrarusuario();
-            }
-        });
-        solicitarDatosFirebase();
-
-
     }
 
     //Metodo para solicitar datos en Firebase del usuario
 
     private void solicitarDatosFirebase() {
         //consultar los datos a nuestra base de datos
-        dataUsuario.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    dataUsuario.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                             user = dataSnapshot.getValue(usuario.class);
+                            user = dataSnapshot.getValue(Usuario.class);
                             String cedula = user.getCedula();
                             String cargo = user.getCargo();
-                            String habitacion = user.getHabitacion();
+                           // String habitacion = user.getHabitacion();
 
                             //Revision de recibo de datos
 
@@ -106,18 +102,27 @@ public class CrearCuentaActivity extends AppCompatActivity {
 
 
     //Metodo que registra el usuario
-    public void registrarusuario() {
+    public void registrarUsuario(View view) {
         String cedula = txtCedula.getText().toString();
         String contrasena = txtContrasena.getText().toString();
-        String habitacion = txtHabitacion.getText().toString();
+        int habitacion = Integer.parseInt(txtHabitacion.getText().toString());
+        Usuario usuario = new Usuario(cargo,cedula,contrasena,habitacion,solicitudEstado);
+        DatabaseReference usuarios = databaseReference.child(Variables.USUARIO_FI);
+        usuarios.child(usuario.getCedula()).setValue(usuario);
+        Context context = getApplicationContext();
+        CharSequence text = "Registrado";
+        int duration = Toast.LENGTH_SHORT;
 
-        if (!TextUtils.isEmpty(cedula)) {
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+        //usuarios.child();
+        //  if (!TextUtils.isEmpty(cedula)) {
             //String id = dataUsuario.push().getKey();
-            usuario usuario1 = new usuario(cedula, contrasena, "Paciente", habitacion);
-            dataUsuario.child(cedula).setValue(usuario1);
+           // Usuario usuario1 = new Usuario(cedula, contrasena, "Paciente", habitacion);
+            //dataUsuario.child(cedula).setValue(usuario1);
             // dataUsuario.child("Usuarios").child(id).setValue(usuario1);
 
-        }
+        //}
 
     }
 
@@ -134,7 +139,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
 
     public void Enviar(View view){
         Intent i= new Intent(this, FragmentPerfil.class);
-        i.putExtra("user",user.cargo);
+       // i.putExtra("user",user.cargo);
         startActivity(i);
 
     }

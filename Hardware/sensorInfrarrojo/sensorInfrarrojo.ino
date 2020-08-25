@@ -15,9 +15,18 @@ WiFiMulti wifiMulti;
 #define WIFI_NAME "LAN"
 #define WIFI_KEY "PagaTuInternet123"
 
+// MotorB
+int motorBPin3 = 27; 
+int motorBPin4 = 26; 
+int enable1PinB = 14;
 
+// Setting PWM properties
+const int freq = 30000;
+const int pwmChannel = 0;
+const int resolution = 8;
+int dutyCycle = 200;
 
-const int sensorPin = 14;
+const int sensorPin = 25;
  
 void setup() {
  
@@ -47,6 +56,12 @@ void setup() {
   Firebase.setwriteSizeLimit(firebaseData, "tiny");
   Serial.println("------------------------------------");
   Serial.println("Connected...");
+  
+  pinMode(motorBPin3, OUTPUT);
+  pinMode(motorBPin4, OUTPUT);
+  pinMode(enable1PinB, OUTPUT);
+     Serial.print("Testing DC Motor...");
+
 } 
 
 void loop(){
@@ -66,10 +81,21 @@ void loop(){
 //  Serial.println(solicitud);
   if(value == 0 && firebaseData.intData() == 1){
     Serial.println("Carro en movimiento");
+     // Move the DC motor forward at maximum speed
+    Serial.println("Moving Forward");
+    digitalWrite(motorBPin3, LOW);
+    digitalWrite(motorBPin4, HIGH);
+      delay(2000);
+
     
   }else{
     Serial.println("No hay insumo medico,El carro no se mueve");
+    Serial.println("Motor stopped");
+    digitalWrite(motorBPin3, LOW);
+    digitalWrite(motorBPin4, LOW);
   }
+
+ 
    delay(1000);    
 
 }

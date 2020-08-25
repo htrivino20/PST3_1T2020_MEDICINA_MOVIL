@@ -43,7 +43,9 @@
         android:text="@string/continuar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
-        tools:text="REGISTRAR" />
+        tools:text="REGISTRAR"
+        android:onClick="registrarUsuario"
+        />
 
     <EditText
         android:id="@+id/etContrasena2"
