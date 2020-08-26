@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.example.medicinamovil.R;
 
@@ -25,8 +28,12 @@ public class FragmentSolicitud extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private ArrayList<String[]> rows= new ArrayList<>();
-    private String[] header={"Medicamentos", "Hora","Estado"};
+    //private String[] header={"Medicamentos", "Hora","Estado"};
     private TableLayout tableLayout;
+
+    private String[][] datos=null;
+    ListView listaMedicamentos;
+    Button botonEnviarSolicitud;
 
 
 
@@ -73,31 +80,48 @@ public class FragmentSolicitud extends Fragment {
 
         //Mostrar medicamentos diarios
         agregarMedicamentos();
-        //tableLayout=(TableLayout) view.findViewById(R.id.tablaMedicamentos);
-        //TablaDinamica tableDynamic=new TablaDinamica(tableLayout, container.getContext());
-        //tableDynamic.addHeader(header);
+        listaMedicamentos=(ListView) view.findViewById(R.id.lvMedicamentos);
+        listaMedicamentos.setAdapter(new AdaptadorMedicamentos(view.getContext(), datos));
+        botonEnviarSolicitud=(Button)view.findViewById(R.id.botonEnviarSolicitud);
 
-        //tableDynamic.addData(rows);
-
-
-
-
+        //Accion del boton
+        botonEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("CLICKKKKK: Tamaño de array");
+                ArrayList<String> medicamentosSolicitados=AdaptadorMedicamentos.getMedicamentosSolicitados();
+                System.out.println(medicamentosSolicitados.size());
+                if(!(medicamentosSolicitados.isEmpty())){
+                    Toast.makeText(getActivity().getBaseContext(),"Peticion con "+medicamentosSolicitados.size()+" medicamentos", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity().getBaseContext(),"No ha seleccionado algun medicamento", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return view;
     }
 
     public void agregarMedicamentos(){
-        String[] receta1={"Paracetamol","8 am","Pendiente"};
-        String[] receta2={"Ibuprofeno","10 am","Entregado"};
-        String[] receta3={"Trileptal","10 am","Entregado"};
-        String[] receta4={"Acnotin","12 am","Pendiente"};
-        String[] receta5={"Pastilla5","1 pm","Pendiente"};
 
-        rows.add(receta1);
-        rows.add(receta2);
-        rows.add(receta3);
-        rows.add(receta4);
-        rows.add(receta5);
+            //Aqui se debe hacer la consulta de los datos de acuerdo con el id del paciente
+            datos=new String[][]{ new String[] {"Paracetamol","https://www.pngkit.com/png/full/694-6945463_pastillas-tempra-caja-de-500mg-paracetamol.png"},
+                    new String[] {"Ibuprofeno","https://www.moncloa.com/wp-content/uploads/2020/07/ibuprofeno.jpg"},
+                    new String[] {"Trileptal","https://colsubsidio.vteximg.com.br/arquivos/ids/157682-1200-1200/7702635718338.jpg?v=637108450484170000"},
+                    new String[]  {"Acnotin","https://www.bago.com.ec/wp-content/uploads/2020/03/ACNOTIN-adicional.png"},
+                    new String[] {"Norlevo","https://www.farma-vazquez.com/13227-large_default/norlevo-15-mg-1-comprimido.jpg"}
+            };
 
+    }
+
+    public void enviarSolicitud(View view){
+        ArrayList<String> medicamentosSolicitados=AdaptadorMedicamentos.getMedicamentosSolicitados();
+        if(!(medicamentosSolicitados.isEmpty())){
+            Toast toast=Toast.makeText(getActivity().getBaseContext(),"Se realiza la peticion", Toast.LENGTH_SHORT);
+        }
+        else{
+            Toast toast=Toast.makeText(getActivity().getBaseContext(),"No ha seleccionado algun medicamento", Toast.LENGTH_SHORT);
+        }
 
     }
 }

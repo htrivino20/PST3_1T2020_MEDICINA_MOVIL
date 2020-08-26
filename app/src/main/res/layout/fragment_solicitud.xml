@@ -12,38 +12,55 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/botonEnviarSolicitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="272dp"
+            android:layout_marginTop="15dp"
             android:text="@string/enviar_solicitud"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.756" />
+            app:layout_constraintTop_toBottomOf="@+id/lvMedicamentos" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="183dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="68dp"
-            android:text="@string/paciente"
-            android:textSize="36sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Solicitar medicamentos"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <ListView
+            android:id="@+id/lvMedicamentos"
+            android:layout_width="407dp"
+            android:layout_height="361dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+        <Button
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:text="@string/necesita_alguna_medicina"
-            android:textSize="24sp"
+            android:layout_marginTop="15dp"
+            android:text="Solicitudes pendientes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/botonEnviarSolicitud" />
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="405dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

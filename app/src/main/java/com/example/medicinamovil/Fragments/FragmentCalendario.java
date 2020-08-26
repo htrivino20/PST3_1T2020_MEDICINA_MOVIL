@@ -7,20 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.medicinamovil.R;
 
-import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -34,13 +28,7 @@ public class FragmentCalendario extends Fragment {
     private String[] header={"Medicamentos", "Hora","Estado"};
     private ArrayList<String[]> rows= new ArrayList<>();
 
-    String[][] datos={
-            {"Paracetamol","8 am","Pendiente"},
-            {"Ibuprofeno","10 am","Entregado"},
-            {"Trileptal","10 am","Entregado"},
-            {"Acnotin","12 am","Pendiente"},
-            {"Norlevo","1 pm","Pendiente"}
-    };
+    String[][] datos=null;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -94,9 +82,23 @@ public class FragmentCalendario extends Fragment {
         fecha.setText(fechaFormato);
 
         //LisView de medicamentos
+        obtenerMedicamentos();
+
         listaMedicamentosDiarios=(ListView) view.findViewById(R.id.lvMedicamentosDiarios);
-        listaMedicamentosDiarios.setAdapter(new Adaptador(view.getContext(), datos));
+        listaMedicamentosDiarios.setAdapter(new AdaptadorMedicamentosPaciente(view.getContext(), datos));
         return view;
+    }
+
+    private void obtenerMedicamentos(){
+        //Aqui se debe hacer la consulta de los datos de acuerdo con el id del paciente
+        datos=new String[][]{ new String[] {"Paracetamol","https://www.pngkit.com/png/full/694-6945463_pastillas-tempra-caja-de-500mg-paracetamol.png","8 am","Pendiente"},
+                new String[] {"Ibuprofeno","https://www.moncloa.com/wp-content/uploads/2020/07/ibuprofeno.jpg","10 am","Entregado"},
+                new String[] {"Trileptal","https://colsubsidio.vteximg.com.br/arquivos/ids/157682-1200-1200/7702635718338.jpg?v=637108450484170000","10 am","Entregado"},
+                new String[]  {"Acnotin","https://www.bago.com.ec/wp-content/uploads/2020/03/ACNOTIN-adicional.png","12 am","Pendiente"},
+                new String[] {"Norlevo","https://www.farma-vazquez.com/13227-large_default/norlevo-15-mg-1-comprimido.jpg","1 pm","Pendiente"}
+        };
+
+
     }
 
 

@@ -9,11 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medicinamovil.InfoActivity;
 import com.example.medicinamovil.R;
 import com.squareup.picasso.Picasso;
 
-public class Adaptador extends BaseAdapter {
-
+public class AdaptadorMedicamentosPaciente extends BaseAdapter {
     private static LayoutInflater inflater = null;
     Context contexto;
     String[][] datos=null;
@@ -21,7 +21,7 @@ public class Adaptador extends BaseAdapter {
     private String photoEntregado="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/6549974331557740369-512.png";
     private String photoPendiente="https://cdn3.iconfinder.com/data/icons/flat-office-icons-1/140/Artboard_1-11-512.png";
 
-    public Adaptador(Context contexto, String[][] datos) {
+    public AdaptadorMedicamentosPaciente(Context contexto, String[][] datos) {
         this.contexto = contexto;
         this.datos = datos;
         inflater=(LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
@@ -30,14 +30,31 @@ public class Adaptador extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        final View vista = inflater.inflate(R.layout.elementos_lista, null);
+        final View vista = inflater.inflate(R.layout.elementos_lista_medicamentos_paciente, null);
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
+
+
         TextView hora = (TextView) vista.findViewById(R.id.tvHora);
         ImageView imagen = (ImageView) vista.findViewById(R.id.ivEstado);
-        nombreMedicina.setText(datos[i][0]);
-        hora.setText(datos[i][1]);
 
-        if(datos[i][2].equals("Entregado")){
+        nombreMedicina.setText(datos[i][0]);
+        hora.setText(datos[i][2]);
+        TextView moreInfo=(TextView) vista.findViewById(R.id.tvmoreInfo);
+
+        moreInfo.setTag(i);
+        moreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mostrarInfo = new Intent(contexto, InfoActivity.class);
+                mostrarInfo.putExtra("nombreMedicina", datos[(Integer)v.getTag()][0]);
+                mostrarInfo.putExtra("imagenMedicina", datos[(Integer)v.getTag()][1]);
+                contexto.startActivity(mostrarInfo);
+            }
+        });
+
+
+
+        if(datos[i][3].equals("Entregado")){
             Picasso.get().load(photoEntregado).into(imagen);
         }
         else{
