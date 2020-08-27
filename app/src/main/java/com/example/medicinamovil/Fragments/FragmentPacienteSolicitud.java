@@ -45,7 +45,7 @@ public class FragmentPacienteSolicitud extends Fragment {
     ListView listaMedicamentos;
     Button botonEnviarSolicitud;
     SearchView searchView;
-   // HashMap<Integer, Medicina> dataMedicina;
+    // HashMap<Integer, Medicina> dataMedicina;
 
 
 

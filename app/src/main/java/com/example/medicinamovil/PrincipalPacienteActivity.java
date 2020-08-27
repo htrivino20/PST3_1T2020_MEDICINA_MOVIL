@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.medicinamovil.Fragments.FragmentPacienteCalendario;
 import com.example.medicinamovil.Fragments.FragmentPacientePerfil;
@@ -33,10 +36,21 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
     private static Usuario user;
     private static HashMap<Integer, Medicina> dataMedicina =new HashMap<>();
 
+    ArrayList<Medicina> medicinas= new ArrayList<>();
+    FirebaseDatabase database;
+    Medicina medicina;
+    TextView tv;
+    //String s ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.err.println("ANTES");
+        tv=findViewById(R.id.tvVacio);
+
         agregarMedicamentos();
+        //System.err.println("DESPUES: Tamaño de array: "+s);
+
 
         setContentView(R.layout.activity_principal);
         iniciarDatos();
@@ -44,6 +58,8 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         BottomNavigationView bottomNavi = findViewById(R.id.bottom_navigation);
         bottomNavi.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentPacienteCalendario()).commit();
+        //CharSequence a=tv.getText();
+        //System.out.println("IMPRESION DE A:"+a);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,7 +90,8 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         receta.put(3,new String[]{"10 am","Entregado"});
         receta.put(4,new String[]{"12 am","Pendiente"});
         user=new Paciente("0123456789", "contraseña",100, receta);
-        }
+
+    }
 
     public void agregarMedicamentos(){
         //Lectura de todas las medicinas
@@ -86,7 +103,6 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         dataMedicina.put(6,new Medicina(6,"Contac","https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/7501065060587.jpg","Descripción Contac","150mg"));
         dataMedicina.put(7,new Medicina(7,"Amoxicilina","https://www.zonatattoos.com/i/foro/antibiotico_amoxicilina.JPG","Descripción Amoxicilina","250mg"));
         dataMedicina.put(8,new Medicina(8,"Ciprofloxacin","https://unof.org/wp-content/uploads/2018/09/ciprofloxacino-300x254.png","Descripción Ciprofloxacin","150mg"));
-
     }
 
     public static HashMap<Integer, Medicina> getDataMedicina() {
@@ -96,4 +112,7 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
     public static Usuario getUser() {
         return user;
     }
+
+
+
 }
