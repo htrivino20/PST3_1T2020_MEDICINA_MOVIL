@@ -22,6 +22,15 @@ public class IniciarSesionActivity extends AppCompatActivity {
         //finish();
     }
 
+    public void pruebaEnfermero(View view){
+        Intent principalA = new Intent(this, PrincipalEnfermeroActivity.class);
+        //PrincipalActivity.setUser(usuario.getText().toString());
+        //System.out.println("usuario en login: "+usuario.getText());
+        startActivity(principalA);
+        //finish();
+    }
+
+
 
 
 }
