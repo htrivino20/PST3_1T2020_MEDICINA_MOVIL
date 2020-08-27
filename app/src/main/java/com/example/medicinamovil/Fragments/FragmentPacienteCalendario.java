@@ -10,25 +10,26 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.medicinamovil.ObjetosNat.Paciente;
+import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentCalendario#newInstance} factory method to
+ * Use the {@link FragmentPacienteCalendario#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCalendario extends Fragment {
-    TextView fecha;
-    ListView listaMedicamentosDiarios;
+public class FragmentPacienteCalendario extends Fragment {
+    private TextView fecha;
+    private ListView listaMedicamentosDiarios;
     private String[] header={"Medicamentos", "Hora","Estado"};
-    private ArrayList<String[]> rows= new ArrayList<>();
+    private HashMap<Integer, String[]> receta;
 
-    String[][] datos=null;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +41,7 @@ public class FragmentCalendario extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentCalendario() {
+    public FragmentPacienteCalendario() {
         // Required empty public constructor
     }
 
@@ -53,8 +54,8 @@ public class FragmentCalendario extends Fragment {
      * @return A new instance of fragment FragmentHome.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentCalendario newInstance(String param1, String param2) {
-        FragmentCalendario fragment = new FragmentCalendario();
+    public static FragmentPacienteCalendario newInstance(String param1, String param2) {
+        FragmentPacienteCalendario fragment = new FragmentPacienteCalendario();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,22 +84,13 @@ public class FragmentCalendario extends Fragment {
 
         //LisView de medicamentos
         obtenerMedicamentos();
-
         listaMedicamentosDiarios=(ListView) view.findViewById(R.id.lvMedicamentosDiarios);
-        listaMedicamentosDiarios.setAdapter(new AdaptadorMedicamentosPaciente(view.getContext(), datos));
+        listaMedicamentosDiarios.setAdapter(new AdaptadorMedicamentosPaciente(view.getContext(), receta));
         return view;
     }
 
     private void obtenerMedicamentos(){
-        //Aqui se debe hacer la consulta de los datos de acuerdo con el id del paciente
-        datos=new String[][]{ new String[] {"Paracetamol","https://www.pngkit.com/png/full/694-6945463_pastillas-tempra-caja-de-500mg-paracetamol.png","8 am","Pendiente"},
-                new String[] {"Ibuprofeno","https://www.moncloa.com/wp-content/uploads/2020/07/ibuprofeno.jpg","10 am","Entregado"},
-                new String[] {"Trileptal","https://colsubsidio.vteximg.com.br/arquivos/ids/157682-1200-1200/7702635718338.jpg?v=637108450484170000","10 am","Entregado"},
-                new String[]  {"Acnotin","https://www.bago.com.ec/wp-content/uploads/2020/03/ACNOTIN-adicional.png","12 am","Pendiente"},
-                new String[] {"Norlevo","https://www.farma-vazquez.com/13227-large_default/norlevo-15-mg-1-comprimido.jpg","1 pm","Pendiente"}
-        };
-
-
+        receta= ((Paciente) PrincipalPacienteActivity.getUser()).getReceta();
     }
 
 

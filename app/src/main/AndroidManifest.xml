@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SolicitudActivity"></activity>
+        <activity android:name=".AlertActivity"></activity>
+        <activity android:name=".SolicitudActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".ObjetosNat.InfoActivity" />
         <activity android:name=".Fragments.InfoActivity" />
-        <activity android:name=".PrincipalActivity" />
+        <activity android:name=".PrincipalPacienteActivity" />
         <activity android:name=".IniciarSesionActivity" />
         <activity android:name=".CrearCuentaActivity" />
         <activity android:name=".InicioActivity" />

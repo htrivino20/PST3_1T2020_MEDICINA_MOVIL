@@ -3,27 +3,21 @@ package com.example.medicinamovil.ObjetosNat;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 //Clase oara regitro de usaurio
 
 public class Usuario {
     //Atributos de la clase usuario
-    private String cargo;
     private String cedula;
     private String  contrasena;
-    private int numeroHabitacion;
 
-    public Usuario(String cargo, String cedula, String contrasena) {
-        this.cargo = cargo;
+    public Usuario(String cedula, String contrasena) {
         this.cedula = cedula;
         this.contrasena = contrasena;
-    }
 
-    public Usuario(String cargo, String cedula, String contrasena, int numeroHabitacion) {
-        this.cargo = cargo;
-        this.cedula = cedula;
-        this.contrasena = contrasena;
-        this.numeroHabitacion = numeroHabitacion;
     }
 
 
@@ -44,9 +38,6 @@ public class Usuario {
     }
 
 
-    public String getCargo() {
-        return cargo;
-    }
 
     public String getCedula() {
         return cedula;
@@ -56,9 +47,6 @@ public class Usuario {
         return contrasena;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
 
     public void setCedula(String cedula) {
         this.cedula = cedula;

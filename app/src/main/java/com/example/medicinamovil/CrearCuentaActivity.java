@@ -3,15 +3,13 @@ package com.example.medicinamovil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.medicinamovil.Fragments.FragmentPerfil;
+import com.example.medicinamovil.Fragments.FragmentPacientePerfil;
 import com.example.medicinamovil.ObjetosNat.Habitacion;
 import com.example.medicinamovil.ObjetosNat.Usuario;
 import com.example.medicinamovil.ObjetosNat.Variables;
@@ -59,7 +57,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
     }
 
     //Metodo que registra el usuario
-    public void registrarUsuario(View view) {
+    /*public void registrarUsuario(View view) {
         DatabaseReference usuarios = databaseReference.child(Variables.USUARIO_FI);
         usuarios.addValueEventListener(new ValueEventListener() {
             String cedula = txtCedula.getText().toString();
@@ -102,7 +100,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     public Habitacion asignarHabitacion(){
         final ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
@@ -134,12 +132,12 @@ public class CrearCuentaActivity extends AppCompatActivity {
 
 
     public void Navigation(View view) {
-        Intent navegador = new Intent(this, PrincipalActivity.class);
+        Intent navegador = new Intent(this, PrincipalPacienteActivity.class);
         startActivity(navegador);
     }
 
     public void Enviar(View view){
-        Intent i= new Intent(this, FragmentPerfil.class);
+        Intent i= new Intent(this, FragmentPacientePerfil.class);
        // i.putExtra("user",user.cargo);
         startActivity(i);
 

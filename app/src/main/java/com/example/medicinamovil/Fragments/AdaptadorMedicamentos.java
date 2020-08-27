@@ -11,98 +11,105 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.medicinamovil.InfoActivity;
+import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class AdaptadorMedicamentos extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    Context contexto;
-    private String[][] datos=null;
+    //private static ArrayList<Medicina> medicamentosSolicitados=new ArrayList<>();
 
-    private ArrayList<Integer> tags=new ArrayList<>();
-    private static ArrayList<String> medicamentosSolicitados=new ArrayList<>();
+    private Context contexto;
+    private  Map<Integer, Medicina> dataMedicina;
+    private  ArrayList<Integer> clavesMedicina =new ArrayList<>();
+    private  static ArrayList<Integer> tags=new ArrayList<>();
 
-    public AdaptadorMedicamentos(Context contexto, String[][] datos) {
+    public AdaptadorMedicamentos(Context contexto, HashMap<Integer, Medicina> data ) {
         this.contexto = contexto;
-        this.datos = datos;
+        this.dataMedicina = data;
         inflater=(LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        medicamentosSolicitados.clear();
-        final View vista = inflater.inflate(R.layout.elementos_lista_medicamentos, null);
+        View vista = inflater.inflate(R.layout.elementos_lista_medicamentos, null);
+        vista=actualizarVista(i,vista);
+        return vista;
+    }
+
+    private View actualizarVista(int i, View vista){
+        //clavesMedicina.clear();
+        for(Integer codigo:dataMedicina.keySet()) {
+            clavesMedicina.add(codigo);
+        }
 
         ImageView imagenMedicina = (ImageView) vista.findViewById(R.id.ivMedicina);
-        Picasso.get().load(datos[i][1]).into(imagenMedicina);
+        Picasso.get().load(dataMedicina.get(clavesMedicina.get(i)).getImagen()).into(imagenMedicina);
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
-        nombreMedicina.setText(datos[i][0]);
+        nombreMedicina.setText(dataMedicina.get(clavesMedicina.get(i)).getNombre());
 
-        TextView moreInfo=(TextView) vista.findViewById(R.id.tvInfo);
+        final TextView moreInfo=(TextView) vista.findViewById(R.id.tvInfo);
         moreInfo.setTag(i);
 
+        System.out.println("ID MEDICINA"+dataMedicina.get(clavesMedicina.get(i)).getId());
+        System.out.println("VALOR DE I:"+i);
+
         final CheckBox checkBox=(CheckBox) vista.findViewById(R.id.checkBox);
-        checkBox.setTag(i);
+        checkBox.setTag(dataMedicina.get(clavesMedicina.get(i)).getId());
 
         if(tags.contains(checkBox.getTag())){
             checkBox.setChecked(true);
         }
-
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()){
-                    tags.add((Integer)v.getTag());
-                    //Se agrega el nombre del medicmento a los medicamentos solicitados
-                    medicamentosSolicitados.add(datos[(Integer)v.getTag()][0]);
+                    tags.add((Integer)checkBox.getTag());
                 }
                 else{
-                    //El tag es para mantener el check
-                    tags.remove((Integer)v.getTag());
-                    medicamentosSolicitados.remove(datos[(Integer)v.getTag()][0]);
+                    tags.remove((Integer)checkBox.getTag());
                 }
-
-                //Intent mostrarInfo = new Intent(contexto, InfoActivity.class);
-                //mostrarInfo.putExtra("nombreMedicina", datos[(Integer)v.getTag()][0]);
-                //mostrarInfo.putExtra("imagenMedicina", datos[(Integer)v.getTag()][1]);
-                //contexto.startActivity(mostrarInfo);
             }
         });
-
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mostrarInfo = new Intent(contexto, InfoActivity.class);
-                mostrarInfo.putExtra("nombreMedicina", datos[(Integer)v.getTag()][0]);
-                mostrarInfo.putExtra("imagenMedicina", datos[(Integer)v.getTag()][1]);
+                mostrarInfo.putExtra("medicinaNombre", dataMedicina.get(clavesMedicina.get((Integer) v.getTag())).getNombre());
+                mostrarInfo.putExtra("medicinaImagen", dataMedicina.get(clavesMedicina.get((Integer)v.getTag())).getImagen());
+                mostrarInfo.putExtra("medicinaDescripcion", dataMedicina.get(clavesMedicina.get((Integer)v.getTag())).getDescripcion());
                 contexto.startActivity(mostrarInfo);
             }
         });
-
-        return vista;
+       return vista;
     }
-
 
     @Override
-    public int getCount() {
-        return datos.length;
+    public int getCount(){
+        return dataMedicina.size();
     }
-
     @Override
     public Object getItem(int i) {
         return null;
     }
-
     @Override
     public long getItemId(int i) {
         return 0;
     }
-
-    public static ArrayList<String> getMedicamentosSolicitados() {
-        return medicamentosSolicitados;
+    public static ArrayList<Integer> getTags() {
+        return tags;
     }
+    public static void clearTags(){
+        tags.clear();
+    }
+
+
 }

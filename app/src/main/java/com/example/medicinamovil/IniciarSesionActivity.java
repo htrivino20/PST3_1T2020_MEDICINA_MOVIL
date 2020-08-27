@@ -15,10 +15,13 @@ public class IniciarSesionActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view){
-        Intent principalA = new Intent(this, PrincipalActivity.class);
+        Intent principalA = new Intent(this, PrincipalPacienteActivity.class);
         //PrincipalActivity.setUser(usuario.getText().toString());
         //System.out.println("usuario en login: "+usuario.getText());
         startActivity(principalA);
         //finish();
     }
+
+
+
 }

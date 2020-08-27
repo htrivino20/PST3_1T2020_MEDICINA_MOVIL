@@ -17,16 +17,18 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info3);
         TextView nombre = (TextView) findViewById(R.id.tvNombreMedicamento);
+        TextView descripcion = (TextView) findViewById(R.id.tvDescripcion);
+
         ImageView imagenMedicina = (ImageView) findViewById(R.id.ivMedicinaInfo);
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         System.out.println(b);
 
         if(b!=null){
-            System.out.println("NOMBRE MEDICINA DENTRO DEL INTENT"+ b.get("nombreMedicina"));
-            nombre.setText((String) b.get("nombreMedicina"));
-            Picasso.get().load((String) b.get("imagenMedicina")).into(imagenMedicina);
-
+            //System.out.println("NOMBRE MEDICINA DENTRO DEL INTENT"+ b.get("nombreMedicina"));
+            nombre.setText((String) b.get("medicinaNombre"));
+            Picasso.get().load((String) b.get("medicinaImagen")).into(imagenMedicina);
+            descripcion.setText((String) b.get("medicinaDescripcion"));
             //img.setImageResource();
 
         }

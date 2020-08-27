@@ -7,17 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.medicinamovil.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPerfil#newInstance} factory method to
+ * Use the {@link FragmentPacientePerfil#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPerfil extends Fragment {
+public class FragmentPacientePerfil extends Fragment {
     String datos;
     TextView nombre;
     View vista;
@@ -30,7 +29,7 @@ public class FragmentPerfil extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentPerfil() {
+    public FragmentPacientePerfil() {
         // Required empty public constructor
     }
 
@@ -43,8 +42,8 @@ public class FragmentPerfil extends Fragment {
      * @return A new instance of fragment FragmentPerfil.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentPerfil newInstance(String param1, String param2) {
-        FragmentPerfil fragment = new FragmentPerfil();
+    public static FragmentPacientePerfil newInstance(String param1, String param2) {
+        FragmentPacientePerfil fragment = new FragmentPacientePerfil();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,10 +64,8 @@ public class FragmentPerfil extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista=inflater.inflate(R.layout.fragment_perfil, container, false);
-
-         nombre=(TextView)vista.findViewById(R.id.txtNombre);
+        nombre=(TextView)vista.findViewById(R.id.txtNombre);
 
         return vista;
     }
