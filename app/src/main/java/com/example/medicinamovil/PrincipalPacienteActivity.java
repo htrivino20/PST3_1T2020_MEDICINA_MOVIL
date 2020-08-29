@@ -63,6 +63,10 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         BottomNavigationView bottomNavi = findViewById(R.id.bottom_navigation);
         bottomNavi.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentPacienteCalendario()).commit();
+        for (Integer m:dataMedicina.keySet()){
+            System.out.println("Medicina salida:"+dataMedicina.get(m));
+        }
+
         //CharSequence a=tv.getText();
         //System.out.println("IMPRESION DE A:"+a);
     }
