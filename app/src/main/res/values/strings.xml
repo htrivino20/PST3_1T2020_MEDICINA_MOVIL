@@ -18,6 +18,7 @@
     <string name="paciente">PACIENTE</string>
     <string name="necesita_alguna_medicina">necesita alguna medicina?</string>
     <string name="textview">TextView</string>
+    <string name="hola">hola</string>
 
 
 </resources>

@@ -38,6 +38,7 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
 
     ArrayList<Medicina> medicinas= new ArrayList<>();
     FirebaseDatabase database;
+    DatabaseReference db_reference;
     Medicina medicina;
     TextView tv;
     //String s ="";
@@ -48,9 +49,13 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         System.err.println("ANTES");
         tv=findViewById(R.id.tvVacio);
 
+        //Iniciar la base de datos en el nodo requerido
+
+        db_reference= FirebaseDatabase.getInstance().getReference().child("Medicina");
         agregarMedicamentos();
         //System.err.println("DESPUES: Tamaño de array: "+s);
-
+        solicitarMedicina();
+        mapamedicina();
 
         setContentView(R.layout.activity_principal);
         iniciarDatos();
@@ -94,6 +99,8 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
     }
 
     public void agregarMedicamentos(){
+
+
         //Lectura de todas las medicinas
         dataMedicina.put(1,new Medicina(1,"Paracetamol","https://www.pngkit.com/png/full/694-6945463_pastillas-tempra-caja-de-500mg-paracetamol.png","Descripción paracetamol","100mg"));
         dataMedicina.put(2,new Medicina(2, "Ibuprofeno","https://www.moncloa.com/wp-content/uploads/2020/07/ibuprofeno.jpg","Descripción Ibuprofeno","150mg"));
@@ -103,6 +110,14 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         dataMedicina.put(6,new Medicina(6,"Contac","https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/7501065060587.jpg","Descripción Contac","150mg"));
         dataMedicina.put(7,new Medicina(7,"Amoxicilina","https://www.zonatattoos.com/i/foro/antibiotico_amoxicilina.JPG","Descripción Amoxicilina","250mg"));
         dataMedicina.put(8,new Medicina(8,"Ciprofloxacin","https://unof.org/wp-content/uploads/2018/09/ciprofloxacino-300x254.png","Descripción Ciprofloxacin","150mg"));
+
+        // vas a leer los datos, agregar
+
+        //Revisar los datos de la clase medicina.
+
+        //determinte si es paciente o si es enfermero
+
+        // dependiendo de lo que es ingresar al fragmen
     }
 
     public static HashMap<Integer, Medicina> getDataMedicina() {
@@ -114,5 +129,51 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
     }
 
 
+
+    //metodo que devuelve el hasmap lleno con las medicinas en la base de datos
+    public HashMap solicitarMedicina(){
+        db_reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    //Obteniendo los valores de medicina
+
+                    //System.out.println(snapshot);
+                    String nombr = String.valueOf(snapshot.child("nombre").getValue());
+                    String descrip = String.valueOf(snapshot.child("descripcion").getValue());
+                    String dosi = String.valueOf(snapshot.child("dosis").getValue());
+                    String image = String.valueOf(snapshot.child("imagen").getValue());
+                    String idMedi = String.valueOf(snapshot.child("id").getValue());
+                    int numEntero = Integer.parseInt(idMedi);
+
+                    //System.out.println(dosi);
+                    dataMedicina.put(numEntero,new Medicina(numEntero,nombr,image,descrip,dosi));
+                    //System.out.println(dataMedicina);
+                   // System.out.println(snapshot.getKey());
+
+
+                   // dataMedicina.put(snapshot.getKey(),)
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("error");
+
+            }
+        }); return dataMedicina;
+
+
+
+    }
+
+    //Metodo de prueba  de los datos.
+
+    public void mapamedicina(){
+        System.out.println(dataMedicina);
+        System.out.println();dataMedicina.get(1);
+    }
 
 }
