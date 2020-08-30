@@ -9,14 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPacientePerfil#newInstance} factory method to
+ * Use the {@link FragmentPerfil#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPacientePerfil extends Fragment {
+public class FragmentPerfil extends Fragment {
     String datos;
     TextView nombre;
     View vista;
@@ -29,7 +30,7 @@ public class FragmentPacientePerfil extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentPacientePerfil() {
+    public FragmentPerfil() {
         // Required empty public constructor
     }
 
@@ -42,8 +43,8 @@ public class FragmentPacientePerfil extends Fragment {
      * @return A new instance of fragment FragmentPerfil.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentPacientePerfil newInstance(String param1, String param2) {
-        FragmentPacientePerfil fragment = new FragmentPacientePerfil();
+    public static FragmentPerfil newInstance(String param1, String param2) {
+        FragmentPerfil fragment = new FragmentPerfil();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,6 +67,7 @@ public class FragmentPacientePerfil extends Fragment {
                              Bundle savedInstanceState) {
         vista=inflater.inflate(R.layout.fragment_perfil, container, false);
         nombre=(TextView)vista.findViewById(R.id.txtNombre);
+        nombre.setText(MainActivity.getUser().getNombre());
 
         return vista;
     }

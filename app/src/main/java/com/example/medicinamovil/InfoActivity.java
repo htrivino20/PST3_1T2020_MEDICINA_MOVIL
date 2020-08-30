@@ -25,11 +25,9 @@ public class InfoActivity extends AppCompatActivity {
         System.out.println(b);
 
         if(b!=null){
-            //System.out.println("NOMBRE MEDICINA DENTRO DEL INTENT"+ b.get("nombreMedicina"));
             nombre.setText((String) b.get("medicinaNombre"));
             Picasso.get().load((String) b.get("medicinaImagen")).into(imagenMedicina);
             descripcion.setText((String) b.get("medicinaDescripcion"));
-            //img.setImageResource();
 
         }
     }

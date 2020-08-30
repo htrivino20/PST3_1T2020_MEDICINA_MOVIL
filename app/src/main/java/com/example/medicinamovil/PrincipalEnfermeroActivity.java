@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.example.medicinamovil.Fragments.FragmentEnfermeroRecordatorios;
 import com.example.medicinamovil.Fragments.FragmentEnfermeroPerfil;
 import com.example.medicinamovil.Fragments.FragmentEnfermeroSolicitud;
+import com.example.medicinamovil.Fragments.FragmentPerfil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PrincipalEnfermeroActivity extends AppCompatActivity {
@@ -37,7 +38,7 @@ public class PrincipalEnfermeroActivity extends AppCompatActivity {
                     selecFragment = new FragmentEnfermeroSolicitud();
                     break;
                 case R.id.nav_profile:
-                    selecFragment = new FragmentEnfermeroPerfil();
+                    selecFragment = new FragmentPerfil();
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selecFragment).commit();

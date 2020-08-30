@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Paciente;
 import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
@@ -90,7 +91,7 @@ public class FragmentPacienteCalendario extends Fragment {
     }
 
     private void obtenerMedicamentos(){
-        receta= ((Paciente) PrincipalPacienteActivity.getUser()).getReceta();
+        receta=((Paciente) MainActivity.getUser()).getReceta();
     }
 
 

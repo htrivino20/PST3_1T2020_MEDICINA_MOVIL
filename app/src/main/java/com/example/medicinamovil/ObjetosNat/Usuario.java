@@ -13,17 +13,16 @@ public class Usuario {
     //Atributos de la clase usuario
     private String cedula;
     private String  contrasena;
+    private String nombre;
 
-    public Usuario(String cedula, String contrasena) {
+    public Usuario(String cedula, String contrasena,String nombre) {
         this.cedula = cedula;
         this.contrasena = contrasena;
+        this.nombre=nombre;
 
     }
 
 
-
-    public Usuario() {
-    }
 
     public boolean equals(Object obj){
         if(obj!= null){
@@ -43,18 +42,11 @@ public class Usuario {
         return cedula;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public String getContrasena() {
         return contrasena;
     }
-
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-
 }

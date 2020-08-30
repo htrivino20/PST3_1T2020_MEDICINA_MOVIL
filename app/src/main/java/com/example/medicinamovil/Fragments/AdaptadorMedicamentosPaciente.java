@@ -49,7 +49,6 @@ public class AdaptadorMedicamentosPaciente extends BaseAdapter {
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
 
-
         TextView hora = (TextView) vista.findViewById(R.id.tvHora);
         ImageView imagen = (ImageView) vista.findViewById(R.id.ivEstado);
         nombreMedicina.setText(MainActivity.getDataMedicina().get(clavesMedicina.get(i)).getNombre());

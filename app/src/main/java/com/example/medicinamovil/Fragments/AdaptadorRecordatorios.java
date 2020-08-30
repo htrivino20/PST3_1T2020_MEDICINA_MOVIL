@@ -17,6 +17,7 @@ import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,49 +26,45 @@ import java.util.Set;
 public class AdaptadorRecordatorios extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private Context contexto;
-    private static HashMap<Integer, String[]>  info;
+    private static ArrayList<String[]> info;
     private static ArrayList<Integer> habitaciones=new ArrayList<>();
     //private static ArrayList<Integer> clavesMedicina =new ArrayList<>();
 
 
-    public AdaptadorRecordatorios(Context contexto, HashMap<Integer, String[]> info) {
+    public AdaptadorRecordatorios(Context contexto, ArrayList<String[]> info) {
         this.contexto = contexto;
         this.info = info;
         inflater=(LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        //Se manda 0 id pastilla, 1 hora, 2 habitacion
         habitaciones.clear();
         final View vista = inflater.inflate(R.layout.elementos_lista_recordatorios, null);
-        for (Integer habitacion : info.keySet()) {
-            habitaciones.add(habitacion);
+        for (String[] infoIndividual : info) {
+            habitaciones.add(Integer.parseInt(infoIndividual[2]));
         }
-        //String 0 debe ser el id de la pastilla
-        //String 1 debe ser la hora
-        for(Integer habitacion:habitaciones){
-            System.out.println("HABITACION DENTRO DE HABITACIONES"+habitacion);
-        }
-
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
         TextView hora = (TextView) vista.findViewById(R.id.tvHora);
         TextView habitacion = (TextView) vista.findViewById(R.id.tvHabitacion);
 
-
-        nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(habitaciones.get(i))[0])));
-        hora.setText(info.get(habitaciones.get(i))[1]);
-        habitacion.setText("Habitacion: "+Integer.toString(habitaciones.get(i)));
+        nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt((info.get(i))[0])));
+        hora.setText(info.get(i)[1]);
+        habitacion.setText("Habitacion: "+info.get(i)[2]);
         ImageView enviar= (ImageView) vista.findViewById(R.id.ivSend);
-
 
         enviar.setTag(i);
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //habitaciones.remove(habitaciones.get((Integer) v.getTag()));
-                Integer habitacionEnvio=habitaciones.get((Integer) v.getTag());
-                info.remove(habitacionEnvio);
-                Toast.makeText(v.getContext(),"Se han enviado los medicamentos a la habitacion "+habitacionEnvio,Toast.LENGTH_LONG).show();
+                int habitacion=Integer.parseInt(info.get((Integer) v.getTag())[2]);
+                int id=(Integer) v.getTag();
+                // EN EL METODO SETDATO SE DEBE ENVIAR A LA BASE DE DATOS LA SEÑAL DE ENVIO DEL MEDICAMENTO
+                setDato();
+
+                info.remove(id);
+                Toast.makeText(v.getContext(),"Se han enviado los medicamentos a la habitacion "+habitacion,Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });
@@ -96,7 +93,10 @@ public class AdaptadorRecordatorios extends BaseAdapter {
             return dataMedicina.get(idMedicina).getNombre();
         }
         return "";
-
     }
+    public void setDato(){
+        //Verificar el cambio de estado de pastilla dentro de la receta y verificar que se actualicen los datos
+
+    };
 
 }

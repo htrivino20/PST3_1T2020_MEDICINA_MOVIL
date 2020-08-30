@@ -135,10 +135,8 @@ public class FragmentPacienteSolicitud extends Fragment {
                     for (Integer i:idmedicamentosSolicitados){
                         medicamentos=medicamentos+dataMedicina.get(i)+" ";
                         idmedicamentos=idmedicamentos+i.toString()+" ";
-
                     }
                     AdaptadorMedicamentos.clearTags();
-
                     Intent cuadroAlerta = new Intent(view.getContext(), AlertActivity.class);
 
                     cuadroAlerta.putExtra("medicinas", medicamentos);

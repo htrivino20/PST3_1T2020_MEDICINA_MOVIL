@@ -4,14 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrearCuentaActivity">
+    tools:context=".GenerarContrasenaActivity">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/fondoclaro" />
 
     <EditText
         android:id="@+id/etContrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:autofillHints=""
+        android:drawableLeft="@android:drawable/ic_lock_lock"
         android:ems="10"
         android:hint="@string/ingrese_contrase_a"
         android:inputType="textPassword"
@@ -24,13 +37,14 @@
         android:id="@+id/textCedula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="108dp"
         android:autofillHints=""
+        android:drawableLeft="@drawable/ic_baseline_person_24"
         android:ems="10"
         android:hint="@string/n_mero_de_c_dula"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -38,21 +52,22 @@
         android:id="@+id/buttonRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/boton"
+        android:onClick="registrarUsuario"
         android:text="@string/continuar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
-        tools:text="REGISTRAR"
-        android:onClick="registrarUsuario"
-        />
+        tools:text="REGISTRAR" />
 
     <EditText
         android:id="@+id/etContrasena2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="15dp"
         android:autofillHints=""
+        android:drawableLeft="@android:drawable/ic_lock_lock"
         android:ems="10"
         android:hint="@string/repita_su_contrase_a"
         android:inputType="textPassword"
@@ -65,25 +80,27 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
-        android:layout_marginEnd="72dp"
-        android:onClick="Navigation"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/boton"
+        android:onClick="regresar"
         android:text="@string/regresar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
-        tools:text="CONtinuar" />
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegistrar" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="72dp"
         android:text="@string/textview"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Registro Paciente" />
+        tools:text="Generar Contraseña" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

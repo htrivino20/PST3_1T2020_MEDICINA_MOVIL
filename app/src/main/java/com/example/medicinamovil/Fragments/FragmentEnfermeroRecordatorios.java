@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Habitacion;
+import com.example.medicinamovil.ObjetosNat.Paciente;
 import com.example.medicinamovil.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -71,8 +74,6 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         View view = inflater.inflate(R.layout.fragment_enfermero_calendario, container, false);
         //Actualizacion de fecha
         //fecha=(TextView) view.findViewById(R.id.tvFecha);
@@ -82,17 +83,22 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
 
         //LisView de medicamentos
         //obtenerMedicamentos();
-        HashMap<Integer, String[]> info=obtenerMapa();
+        ArrayList<String[]> info=obtenerMapa();
 
         listaRecordatorios=(ListView) view.findViewById(R.id.lvRecordatorios);
         listaRecordatorios.setAdapter(new AdaptadorRecordatorios(view.getContext(), info));
         return view;
     }
 
-    public HashMap<Integer, String[]> obtenerMapa(){
-        HashMap<Integer, String[]> info=new HashMap<>();
-        info.put(1,new String[]{"1","8 am"});
-        info.put(2,new String[]{"2","10 am"});
+    private ArrayList<String[]> obtenerMapa(){
+        ArrayList<String[]> info=new ArrayList<>();
+        ArrayList<Paciente> pacientes= MainActivity.getPacientes();
+        for(Paciente paciente:pacientes){
+            HashMap<Integer, String[]> recetaIndividual=paciente.getReceta();
+            for(Integer idMedicina:recetaIndividual.keySet()){
+                info.add(new String[]{String.valueOf(idMedicina),recetaIndividual.get(idMedicina)[0],String.valueOf(paciente.getNumeroHabitacion())});
+            }
+        }
 
         return info;
     }
