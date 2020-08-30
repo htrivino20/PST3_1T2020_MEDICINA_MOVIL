@@ -34,11 +34,9 @@ import java.util.List;
 public class PrincipalPacienteActivity extends AppCompatActivity {
     //public static HashMap<String, String[]> usuarios = new HashMap<String, String[]>();
     private static Usuario user;
-    private static HashMap<Integer, Medicina> dataMedicina =new HashMap<>();
 
     ArrayList<Medicina> medicinas= new ArrayList<>();
     FirebaseDatabase database;
-    DatabaseReference db_reference;
     Medicina medicina;
     TextView tv;
     //String s ="";
@@ -51,11 +49,10 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
 
         //Iniciar la base de datos en el nodo requerido
 
-        db_reference= FirebaseDatabase.getInstance().getReference().child("Medicina");
-        agregarMedicamentos();
         //System.err.println("DESPUES: Tamaño de array: "+s);
-        solicitarMedicina();
-        mapamedicina();
+        //mapamedicina();
+        //agregarMedicamentos();
+
 
         setContentView(R.layout.activity_principal);
         iniciarDatos();
@@ -63,9 +60,9 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         BottomNavigationView bottomNavi = findViewById(R.id.bottom_navigation);
         bottomNavi.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentPacienteCalendario()).commit();
-        for (Integer m:dataMedicina.keySet()){
-            System.out.println("Medicina salida:"+dataMedicina.get(m));
-        }
+        //for (Integer m:dataMedicina.keySet()){
+        //    System.out.println("Medicina salida:"+dataMedicina.get(m));
+        //}
 
         //CharSequence a=tv.getText();
         //System.out.println("IMPRESION DE A:"+a);
@@ -102,7 +99,7 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
 
     }
 
-    public void agregarMedicamentos(){
+    /*public void agregarMedicamentos(){
 
 
         //Lectura de todas las medicinas
@@ -116,68 +113,24 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
         dataMedicina.put(8,new Medicina(8,"Ciprofloxacin","https://unof.org/wp-content/uploads/2018/09/ciprofloxacino-300x254.png","Descripción Ciprofloxacin","150mg"));
 
         // vas a leer los datos, agregar
-
         //Revisar los datos de la clase medicina.
-
         //determinte si es paciente o si es enfermero
-
         // dependiendo de lo que es ingresar al fragmen
-    }
+    }*/
 
-    public static HashMap<Integer, Medicina> getDataMedicina() {
-        return dataMedicina;
-    }
 
     public static Usuario getUser() {
         return user;
     }
 
-
-
     //metodo que devuelve el hasmap lleno con las medicinas en la base de datos
-    public HashMap solicitarMedicina(){
-        db_reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    //Obteniendo los valores de medicina
-
-                    //System.out.println(snapshot);
-                    String nombr = String.valueOf(snapshot.child("nombre").getValue());
-                    String descrip = String.valueOf(snapshot.child("descripcion").getValue());
-                    String dosi = String.valueOf(snapshot.child("dosis").getValue());
-                    String image = String.valueOf(snapshot.child("imagen").getValue());
-                    String idMedi = String.valueOf(snapshot.child("id").getValue());
-                    int numEntero = Integer.parseInt(idMedi);
-
-                    //System.out.println(dosi);
-                    dataMedicina.put(numEntero,new Medicina(numEntero,nombr,image,descrip,dosi));
-                    //System.out.println(dataMedicina);
-                   // System.out.println(snapshot.getKey());
-
-
-                   // dataMedicina.put(snapshot.getKey(),)
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("error");
-
-            }
-        }); return dataMedicina;
-
-
-
-    }
 
     //Metodo de prueba  de los datos.
 
-    public void mapamedicina(){
+    /*public void mapamedicina(){
         System.out.println(dataMedicina);
         System.out.println();dataMedicina.get(1);
-    }
+    }*/
 
 }

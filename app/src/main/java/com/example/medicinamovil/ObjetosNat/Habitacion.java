@@ -2,13 +2,11 @@ package com.example.medicinamovil.ObjetosNat;
 
 public class Habitacion {
     private int numeroHabitacion;
-    private int ocupada;
     private int ruta;
 
 
-    public Habitacion(int numeroHabitacion, int ocupada, int ruta) {
+    public Habitacion(int numeroHabitacion, int ruta) {
         this.numeroHabitacion = numeroHabitacion;
-        this.ocupada = ocupada;
         this.ruta = ruta;
     }
 
@@ -20,24 +18,22 @@ public class Habitacion {
         this.numeroHabitacion = numeroHabitacion;
     }
 
-    public Habitacion(int ocupada, int ruta) {
-        this.ocupada = ocupada;
-        this.ruta = ruta;
-    }
-
-    public int getOcupada() {
-        return ocupada;
-    }
-
-    public void setOcupada(int ocupada) {
-        this.ocupada = ocupada;
-    }
-
     public int getRuta() {
         return ruta;
     }
 
     public void setRuta(int ruta) {
         this.ruta = ruta;
+    }
+
+    public boolean equals(Object obj){
+        if (obj instanceof Habitacion){
+            if((((Habitacion) obj).getNumeroHabitacion()==this.numeroHabitacion)){
+                return true;
+            }
+
+        }
+        return false;
+
     }
 }

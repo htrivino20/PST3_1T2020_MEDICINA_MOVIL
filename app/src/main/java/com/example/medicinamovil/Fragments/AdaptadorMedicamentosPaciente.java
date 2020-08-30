@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.medicinamovil.InfoActivity;
+import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
 import com.squareup.picasso.Picasso;
@@ -51,7 +52,7 @@ public class AdaptadorMedicamentosPaciente extends BaseAdapter {
 
         TextView hora = (TextView) vista.findViewById(R.id.tvHora);
         ImageView imagen = (ImageView) vista.findViewById(R.id.ivEstado);
-        nombreMedicina.setText(PrincipalPacienteActivity.getDataMedicina().get(clavesMedicina.get(i)).getNombre());
+        nombreMedicina.setText(MainActivity.getDataMedicina().get(clavesMedicina.get(i)).getNombre());
 
         hora.setText((receta.get(clavesMedicina.get(i)))[0]);
         TextView moreInfo=(TextView) vista.findViewById(R.id.tvmoreInfo);
@@ -61,9 +62,9 @@ public class AdaptadorMedicamentosPaciente extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent mostrarInfo = new Intent(contexto, InfoActivity.class);
-                mostrarInfo.putExtra("medicinaNombre", PrincipalPacienteActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getNombre());
-                mostrarInfo.putExtra("medicinaImagen", PrincipalPacienteActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getImagen());
-                mostrarInfo.putExtra("medicinaDescripcion", PrincipalPacienteActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getDescripcion());
+                mostrarInfo.putExtra("medicinaNombre", MainActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getNombre());
+                mostrarInfo.putExtra("medicinaImagen", MainActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getImagen());
+                mostrarInfo.putExtra("medicinaDescripcion", MainActivity.getDataMedicina().get(clavesMedicina.get((Integer)v.getTag())).getDescripcion());
                 contexto.startActivity(mostrarInfo);
             }
         });

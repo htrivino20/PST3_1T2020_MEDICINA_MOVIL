@@ -7,15 +7,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.medicinamovil.ObjetosNat.Habitacion;
 import com.example.medicinamovil.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentEnfermeroCalendario#newInstance} factory method to
+ * Use the {@link FragmentEnfermeroRecordatorios#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentEnfermeroCalendario extends Fragment {
+public class FragmentEnfermeroRecordatorios extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +34,9 @@ public class FragmentEnfermeroCalendario extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentEnfermeroCalendario() {
+    ListView listaRecordatorios;
+
+    public FragmentEnfermeroRecordatorios() {
         // Required empty public constructor
     }
 
@@ -39,8 +49,8 @@ public class FragmentEnfermeroCalendario extends Fragment {
      * @return A new instance of fragment FragmentEnfermeroCalendario.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentEnfermeroCalendario newInstance(String param1, String param2) {
-        FragmentEnfermeroCalendario fragment = new FragmentEnfermeroCalendario();
+    public static FragmentEnfermeroRecordatorios newInstance(String param1, String param2) {
+        FragmentEnfermeroRecordatorios fragment = new FragmentEnfermeroRecordatorios();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +70,30 @@ public class FragmentEnfermeroCalendario extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_enfermero_calendario, container, false);
+
+
+
+        View view = inflater.inflate(R.layout.fragment_enfermero_calendario, container, false);
+        //Actualizacion de fecha
+        //fecha=(TextView) view.findViewById(R.id.tvFecha);
+        //SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        //String fechaFormato = df.format(Calendar.getInstance().getTime());
+        //fecha.setText(fechaFormato);
+
+        //LisView de medicamentos
+        //obtenerMedicamentos();
+        HashMap<Integer, String[]> info=obtenerMapa();
+
+        listaRecordatorios=(ListView) view.findViewById(R.id.lvRecordatorios);
+        listaRecordatorios.setAdapter(new AdaptadorRecordatorios(view.getContext(), info));
+        return view;
+    }
+
+    public HashMap<Integer, String[]> obtenerMapa(){
+        HashMap<Integer, String[]> info=new HashMap<>();
+        info.put(1,new String[]{"1","8 am"});
+        info.put(2,new String[]{"2","10 am"});
+
+        return info;
     }
 }

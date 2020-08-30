@@ -14,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.medicinamovil.AlertActivity;
+import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
@@ -90,7 +91,7 @@ public class FragmentPacienteSolicitud extends Fragment {
 
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_solicitud, container, false);
-        dataMedicina= PrincipalPacienteActivity.getDataMedicina();
+        dataMedicina= MainActivity.getDataMedicina();
 
         //Mostrar medicamentos diarios
         listaMedicamentos=(ListView) view.findViewById(R.id.lvMedicamentos);
@@ -101,7 +102,7 @@ public class FragmentPacienteSolicitud extends Fragment {
         //SearchView
         searchView = (SearchView) view.findViewById(R.id.searchView);
 
-        dataMedicina= PrincipalPacienteActivity.getDataMedicina();
+        dataMedicina= MainActivity.getDataMedicina();
 
         for(Integer i:dataMedicina.keySet()){
             nombresMedicamentos.put(dataMedicina.get(i).getNombre().toLowerCase(),i);

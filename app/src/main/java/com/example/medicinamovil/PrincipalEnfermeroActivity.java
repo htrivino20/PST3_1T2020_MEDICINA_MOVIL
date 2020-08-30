@@ -7,12 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.medicinamovil.Fragments.FragmentEnfermeroCalendario;
+import com.example.medicinamovil.Fragments.FragmentEnfermeroRecordatorios;
 import com.example.medicinamovil.Fragments.FragmentEnfermeroPerfil;
 import com.example.medicinamovil.Fragments.FragmentEnfermeroSolicitud;
-import com.example.medicinamovil.Fragments.FragmentPacienteCalendario;
-import com.example.medicinamovil.Fragments.FragmentPacientePerfil;
-import com.example.medicinamovil.Fragments.FragmentPacienteSolicitud;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PrincipalEnfermeroActivity extends AppCompatActivity {
@@ -24,7 +21,7 @@ public class PrincipalEnfermeroActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavi = findViewById(R.id.bottom_navigation);
         bottomNavi.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentEnfermeroCalendario()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentEnfermeroRecordatorios()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,7 +31,7 @@ public class PrincipalEnfermeroActivity extends AppCompatActivity {
 
             switch (item.getItemId()){
                 case R.id.nav_scheldule:
-                    selecFragment = new FragmentEnfermeroCalendario();
+                    selecFragment = new FragmentEnfermeroRecordatorios();
                     break;
                 case R.id.nav_sms:
                     selecFragment = new FragmentEnfermeroSolicitud();

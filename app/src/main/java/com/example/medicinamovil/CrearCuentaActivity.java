@@ -102,7 +102,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
         });
     }*/
 
-    public Habitacion asignarHabitacion(){
+    /*public Habitacion asignarHabitacion(){
         final ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
 
         DatabaseReference habitaciones = databaseReference.child(Variables.HABITACIONES_FI);
@@ -124,7 +124,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
         });
         Habitacion habitacionDisponible = habitacionesDisponibles.get(0);
         return habitacionDisponible;
-    }
+    }*/
 
     public void regresar(View view) {
         finish();
