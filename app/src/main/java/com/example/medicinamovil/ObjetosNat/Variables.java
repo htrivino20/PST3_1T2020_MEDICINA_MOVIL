@@ -5,4 +5,6 @@ public class Variables {
     public static final String ESP_FI = "Esp";
     public static final String HABITACIONES_FI = "Habitaciones";
     public static final String SOLICITUDES_FI = "Solicitudes";
+    public static final String SOLICITUD_FI = "Solicitud";
+
 }

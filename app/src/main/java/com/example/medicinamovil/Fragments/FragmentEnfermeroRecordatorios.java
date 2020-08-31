@@ -83,10 +83,15 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
 
         //LisView de medicamentos
         //obtenerMedicamentos();
-        ArrayList<String[]> info=obtenerMapa();
 
+        ArrayList<String[]> info=obtenerMapa();
+       // AdaptadorRecordatorios adaptadorRecordatorios = new AdaptadorRecordatorios(view.getContext(), info);
+
+        //String idCedulaUsuario = (String)getArguments().getString("idCedulaUsuario");
+        //cuadroAlerta.putExtra("idCedulaUsuario", idCedulaUsuario);
         listaRecordatorios=(ListView) view.findViewById(R.id.lvRecordatorios);
         listaRecordatorios.setAdapter(new AdaptadorRecordatorios(view.getContext(), info));
+
         return view;
     }
 
@@ -97,9 +102,11 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
             HashMap<Integer, String[]> recetaIndividual=paciente.getReceta();
             for(Integer idMedicina:recetaIndividual.keySet()){
                 info.add(new String[]{String.valueOf(idMedicina),recetaIndividual.get(idMedicina)[0],String.valueOf(paciente.getNumeroHabitacion())});
+                //info.add(new String[]{String.valueOf(idMedicina),recetaIndividual.get(idMedicina)[0],String.valueOf(paciente.getNumeroHabitacion()),paciente.getCedula()});
+
             }
         }
-
+        System.out.println(info.toString());
         return info;
     }
 }

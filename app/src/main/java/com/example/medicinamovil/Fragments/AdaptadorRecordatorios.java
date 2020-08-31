@@ -14,8 +14,11 @@ import com.example.medicinamovil.InfoActivity;
 import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Habitacion;
 import com.example.medicinamovil.ObjetosNat.Medicina;
+import com.example.medicinamovil.ObjetosNat.Variables;
 import com.example.medicinamovil.PrincipalPacienteActivity;
 import com.example.medicinamovil.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,6 +31,8 @@ public class AdaptadorRecordatorios extends BaseAdapter {
     private Context contexto;
     private static ArrayList<String[]> info;
     private static ArrayList<Integer> habitaciones=new ArrayList<>();
+    private DatabaseReference db_reference;
+    private String enviando = "enviando...";
     //private static ArrayList<Integer> clavesMedicina =new ArrayList<>();
 
 
@@ -44,6 +49,7 @@ public class AdaptadorRecordatorios extends BaseAdapter {
         for (String[] infoIndividual : info) {
             habitaciones.add(Integer.parseInt(infoIndividual[2]));
         }
+        db_reference = FirebaseDatabase.getInstance().getReference();
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
         TextView hora = (TextView) vista.findViewById(R.id.tvHora);
@@ -52,6 +58,7 @@ public class AdaptadorRecordatorios extends BaseAdapter {
         nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt((info.get(i))[0])));
         hora.setText(info.get(i)[1]);
         habitacion.setText("Habitacion: "+info.get(i)[2]);
+        //String idCedulaPaciente = info.get(i)[3];
         ImageView enviar= (ImageView) vista.findViewById(R.id.ivSend);
 
         enviar.setTag(i);
@@ -61,9 +68,12 @@ public class AdaptadorRecordatorios extends BaseAdapter {
                 int habitacion=Integer.parseInt(info.get((Integer) v.getTag())[2]);
                 int id=(Integer) v.getTag();
                 // EN EL METODO SETDATO SE DEBE ENVIAR A LA BASE DE DATOS LA SEÑAL DE ENVIO DEL MEDICAMENTO
+                db_reference.child(Variables.SOLICITUD_FI).child("ruta").setValue(habitacion);
+                //db_reference.child(Variables.USUARIO_FI).child(idCedulaPaciente).child("receta");
                 setDato();
 
                 info.remove(id);
+
                 Toast.makeText(v.getContext(),"Se han enviado los medicamentos a la habitacion "+habitacion,Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
