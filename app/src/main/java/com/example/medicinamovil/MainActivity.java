@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private String photo;
     private static HashMap<Integer, Medicina> dataMedicina =new HashMap<>();
     private DatabaseReference db_reference;
+    //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
+    private DatabaseReference db_referenceUsu;
     private static ArrayList<Paciente> pacientes=new ArrayList<>();
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
     private static Usuario usuarioGeneral;
@@ -38,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Referencias Lecturas datos medicina
         db_reference= FirebaseDatabase.getInstance().getReference().child("Medicina");
+        //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
+        db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
 
         dataMedicina=solicitarMedicina();
         pacientes=solicitarPacientes();
@@ -103,22 +108,86 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Paciente> solicitarPacientes(){
         //AQUI SE REALIZA LA LECTURA DE TODOS LOS PACIENTES, SE RETORNA EL ARRAYLIST DE TIPO PACIENTE
-        ArrayList<Paciente> p = new ArrayList<>();
-        HashMap<Integer, String[]> receta1=new HashMap<>();
-        receta1.put(1,new String[]{"12 am","Pendiente"});
-        receta1.put(2,new String[]{"1 pm","Pendiente"});
 
-        HashMap<Integer, String[]> receta2=new HashMap<>();
+        final ArrayList<Paciente> p = new ArrayList<>();
+
+
+
+
+        db_referenceUsu.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    String cargoPA = String.valueOf(snapshot.child("cargo").getValue());
+                    System.out.println(cargoPA);
+
+                    //PETICION DEL USARIO  CON LA CREDENCIAL DE PACIENTE
+
+
+                    //Note
+                    //Solo faltaria que agregue todos los medicamento de una recenta ya que como estan en la base de datos solo coge el primero por arregalar
+                    if(cargoPA.equals("Paciente")){
+
+                        //CAPTURA DE DATOS PACIENTE
+                        String cedulaPA = String.valueOf(snapshot.child("cedula").getValue());
+                        String habitacionPa = String.valueOf(snapshot.child("habitacion").getValue());
+                        String nombrePa = String.valueOf(snapshot.child("nombre").getValue());
+                        String contraPa = String.valueOf(snapshot.child("contrasena").getValue());
+                        String estadoPa= String.valueOf(snapshot.child("receta").child("p1").child("estado").getValue());
+                        String hourPa= String.valueOf(snapshot.child("receta").child("p1").child("hora").getValue());
+                        String idPA= String.valueOf(snapshot.child("receta").child("p1").child("id").getValue());
+                        //CONVERSION DE DATOS ENTEROS
+                        int numId = Integer.parseInt(idPA);
+                        int numHabi = Integer.parseInt(habitacionPa);
+                        //CREACION DE LA  RECETA POR CADA PACIENTE
+                        HashMap<Integer, String[]> receta1=new HashMap<>();
+
+                        //Add de los parametros de la receta del paciente
+                        receta1.put(numId,new String[]{hourPa,estadoPa});
+                        //creacion del paciente de manera local
+                        p.add(new Paciente(cedulaPA,contraPa,numHabi,receta1,nombrePa));
+
+                        //IMPRESIONES EN CONSOLA PARA VISUZALIZAS SI LOS DATOS SE ESTAN LEYENDO desde LA BASE DE DATOS
+                       /* System.out.println("la cedula del paciente es====> " +cedulaPA);
+                        System.out.println("el NOMBRE del paciente es====> " +nombrePa);
+                        System.out.println("el Contrasena del paciente es====> " +contraPa);
+                        System.out.println("La habitacion del paciente es====> " +habitacionPa);
+                        System.out.println("el NOMBRE del paciente es====> " +nombrePa);
+                        System.out.println("La hora del paciente es====> " +hourPa);
+                        System.out.println("Estado del paciente es====> " +estadoPa);
+                        System.out.println(receta1);*/
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //ArrayList<Paciente> p = new ArrayList<>();
+        //HashMap<Integer, String[]> receta1=new HashMap<>();
+       // receta1.put(1,new String[]{"12 am","Pendiente"});
+       // receta1.put(2,new String[]{"1 pm","Pendiente"});
+
+
+        /*HashMap<Integer, String[]> receta2=new HashMap<>();
         receta2.put(4,new String[]{"12 am","Pendiente"});
         receta2.put(5,new String[]{"1 pm","Entregada"});
+*/
+        //HashMap<Integer, String[]> receta3=new HashMap<>();
+        //receta3.put(3,new String[]{"8 am","Entregada"});
+        //receta3.put(5,new String[]{"10 pm","Pendiente"});
+        //System.out.println("esta es la receta===> "+receta2);
 
-        HashMap<Integer, String[]> receta3=new HashMap<>();
-        receta3.put(3,new String[]{"8 am","Entregada"});
-        receta3.put(5,new String[]{"10 pm","Pendiente"});
-
-        p.add(new Paciente("0123456789","c",1,receta1,"Hector Trivino"));
-        p.add(new Paciente("0123456790","c",2,receta2,"Carlos Andres"));
-        p.add(new Paciente("0123456791","c",5,receta3,"Juan Pablo"));
+        //p.add(new Paciente("0123456789","c",1,receta1,"Hector Trivino"));
+       // p.add(new Paciente("0123456790","c",2,receta2,"Carlos Andres"));
+        //p.add(new Paciente("0123456791","c",5,receta3,"Juan Pablo"));
 
         return p;
 
@@ -126,9 +195,58 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Enfermero> solicitarEnfermeros(){
         //AQUI SE DEBE REALIZAR LA LECTURA DE TODOS LOS ENFERMEROS, SE RETORNA EL ARRAYLIST DE TIPO ENFERMERO
-        ArrayList<Enfermero> enf=new ArrayList<>();
-        enf.add(new Enfermero("0987654321","c","Lady Pruna"));
-        enf.add(new Enfermero("0923589663","c","Juan Carlos"));
+
+        //ArrayList de enfermero
+        final ArrayList<Enfermero> enf=new ArrayList<>();
+        // Solicitud de Pacientes
+        db_referenceUsu.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    String cargoPA = String.valueOf(snapshot.child("cargo").getValue());
+                    //System.out.println(cargoPA);
+
+                    //PETICION DEL USARIO  CON LA CREDENCIAL DE PACIENTE
+
+
+                    //Note
+                    //Solo faltaria que agregue todos los medicamento de una recenta ya que como estan en la base de datos solo coge el primero por arregalar
+                    if(cargoPA.equals("Enfermero")){
+
+                        //CAPTURA DE DATOS PACIENTE
+                        String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
+                        String nombreEn = String.valueOf(snapshot.child("nombre").getValue());
+                        String contraEn = String.valueOf(snapshot.child("contrasena").getValue());
+
+
+                        //creacion del paciente de manera local
+                        enf.add(new Enfermero(cedulaEn,contraEn,nombreEn));
+
+                        //IMPRESIONES EN CONSOLA PARA VISUZALIZAS SI LOS DATOS SE ESTAN LEYENDO desde LA BASE DE DATOS
+                       System.out.println("la cedula del Enfermero es====> " +cedulaEn);
+                        System.out.println("el NOMBRE del Enfermero es====> " +nombreEn);
+                        System.out.println("el Contrasena del ENFERMRO es====> " +contraEn);
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+       // ArrayList<Enfermero> enf=new ArrayList<>();
+       enf.add(new Enfermero("0987654321","c","Lady Pruna"));
+       enf.add(new Enfermero("0923589663","c","Juan Carlos"));
         return enf;
 
     }
