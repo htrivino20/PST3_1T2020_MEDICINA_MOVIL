@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -46,6 +47,12 @@ public class PrincipalPacienteActivity extends AppCompatActivity {
                 case R.id.nav_profile:
                     selecFragment = new FragmentPerfil();
             }
+
+            Intent i =getIntent();
+            String idCedula = i.getStringExtra("idCedulaUsuario");
+            Bundle b = new Bundle();
+            b.putString("idCedulaUsuario",idCedula);
+            selecFragment.setArguments(b);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selecFragment).commit();
             return true;

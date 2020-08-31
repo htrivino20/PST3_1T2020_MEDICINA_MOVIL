@@ -268,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<Paciente> getPacientes() {
         return pacientes;
+
     }
     public static ArrayList<Enfermero> getEnfermeros() {
         return enfermeros;

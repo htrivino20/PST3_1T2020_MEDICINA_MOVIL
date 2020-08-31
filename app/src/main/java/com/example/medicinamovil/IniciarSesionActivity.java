@@ -27,6 +27,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view){
+
         tipoUsuario(cedula.getText().toString(), contrasena.getText().toString());
         Usuario tipo=MainActivity.getUser();
         if(tipo==null){
@@ -34,10 +35,16 @@ public class IniciarSesionActivity extends AppCompatActivity {
         }
         else if(tipo instanceof Enfermero){
             Intent principalA = new Intent(this, PrincipalEnfermeroActivity.class);
+            principalA.putExtra("idCedulaUsuario",tipo.getCedula());
+
             startActivity(principalA);
+            //principalA.putExtra("usuario",tipo);
         }
         else if(tipo instanceof Paciente){
             Intent principalA = new Intent(this, PrincipalPacienteActivity.class);
+            principalA.putExtra("idCedulaUsuario",tipo.getCedula());
+           // Intent masRapido = new Intent(this, AlertActivity.class);
+            //masRapido.putExtra("idCedulaUsuario",tipo.getCedula());
             startActivity(principalA);
         }
     }
