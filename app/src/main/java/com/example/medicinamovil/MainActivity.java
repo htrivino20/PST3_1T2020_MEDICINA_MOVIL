@@ -33,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference db_referenceUsu;
     private static ArrayList<Paciente> pacientes=new ArrayList<>();
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
+    //private static ArrayList<Paciente> pacientesSinCambio = new ArrayList<>();
     private static Usuario usuarioGeneral;
     private static ArrayList<String[]> solicitudes;
+
+    private Medicina medicina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         solicitudes=solicitarSolicitudes();
 
         iniciar();
+        //pacientes.clear();
     }
 
     public void iniciar(){
@@ -79,19 +83,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public HashMap solicitarMedicina(){
+    public HashMap<Integer, Medicina> solicitarMedicina(){
         db_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    String nombr = String.valueOf(snapshot.child("nombre").getValue());
-                    String descrip = String.valueOf(snapshot.child("descripcion").getValue());
-                    String dosi = String.valueOf(snapshot.child("dosis").getValue());
-                    String image = String.valueOf(snapshot.child("imagen").getValue());
+                    //String nombr = String.valueOf(snapshot.child("nombre").getValue());
+                    //String descrip = String.valueOf(snapshot.child("descripcion").getValue());
+                    //String dosi = String.valueOf(snapshot.child("dosis").getValue());
+                   // String image = String.valueOf(snapshot.child("imagen").getValue());
+                    medicina = snapshot.getValue(Medicina.class);
                     String idMedi = String.valueOf(snapshot.child("id").getValue());
                     int numEntero = Integer.parseInt(idMedi);
-                    dataMedicina.put(numEntero,new Medicina(numEntero,nombr,image,descrip,dosi));
+                    //dataMedicina.put(numEntero,new Medicina(numEntero,nombr,image,descrip,dosi));
+                    dataMedicina.put(numEntero,medicina);
                 }
             }
             @Override
@@ -110,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
         //AQUI SE REALIZA LA LECTURA DE TODOS LOS PACIENTES, SE RETORNA EL ARRAYLIST DE TIPO PACIENTE
 
         final ArrayList<Paciente> p = new ArrayList<>();
-
-
-
 
         db_referenceUsu.addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,19 +136,31 @@ public class MainActivity extends AppCompatActivity {
                         String habitacionPa = String.valueOf(snapshot.child("habitacion").getValue());
                         String nombrePa = String.valueOf(snapshot.child("nombre").getValue());
                         String contraPa = String.valueOf(snapshot.child("contrasena").getValue());
-                        String estadoPa= String.valueOf(snapshot.child("receta").child("p1").child("estado").getValue());
-                        String hourPa= String.valueOf(snapshot.child("receta").child("p1").child("hora").getValue());
-                        String idPA= String.valueOf(snapshot.child("receta").child("p1").child("id").getValue());
+                        //String estadoPa= String.valueOf(snapshot.child("receta").child("p1").child("estado").getValue());
+                        //String hourPa= String.valueOf(snapshot.child("receta").child("p1").child("hora").getValue());
+                        //String idPA= String.valueOf(snapshot.child("receta").child("p1").child("id").getValue());
                         //CONVERSION DE DATOS ENTEROS
-                        int numId = Integer.parseInt(idPA);
                         int numHabi = Integer.parseInt(habitacionPa);
                         //CREACION DE LA  RECETA POR CADA PACIENTE
-                        HashMap<Integer, String[]> receta1=new HashMap<>();
+
+                        //DatabaseReference receta = db_referenceUsu.child(cedulaPA).child("receta");
+                        System.out.println("AQUIII LAS RECETAS");
+                        HashMap<Integer, String[]> recetasMapa=new HashMap<>();
+                        DataSnapshot recetas = snapshot.child("receta");
+                        for (DataSnapshot r: recetas.getChildren()){
+                           String estadoPa = String.valueOf(r.child("estado").getValue());
+                            String hourPa = String.valueOf(r.child("hora").getValue());
+                            String idPA = String.valueOf(r.child("id").getValue());
+                            int numId = Integer.parseInt(idPA);
+                            recetasMapa.put(numId,new String[]{hourPa,estadoPa});
+
+                        }
+                        //System.out.println(receta);
 
                         //Add de los parametros de la receta del paciente
-                        receta1.put(numId,new String[]{hourPa,estadoPa});
+                        //receta1.
                         //creacion del paciente de manera local
-                        p.add(new Paciente(cedulaPA,contraPa,numHabi,receta1,nombrePa));
+                        p.add(new Paciente(cedulaPA,contraPa,numHabi,recetasMapa,nombrePa));
 
                         //IMPRESIONES EN CONSOLA PARA VISUZALIZAS SI LOS DATOS SE ESTAN LEYENDO desde LA BASE DE DATOS
                        /* System.out.println("la cedula del paciente es====> " +cedulaPA);
@@ -285,4 +300,6 @@ public class MainActivity extends AppCompatActivity {
         return solicitudes;
 
     }
+
+
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GenerarContrasenaActivity">
+    tools:context=".GenerarContrasena">
 
     <ImageView
         android:id="@+id/imageView5"
@@ -41,7 +41,7 @@
         android:autofillHints=""
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:ems="10"
-        android:hint="@string/n_mero_de_c_dula"
+        android:hint="@string/num_cedula"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -54,12 +54,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/boton"
-        android:onClick="registrarUsuario"
+        android:onClick="cambiarContrasena"
         android:text="@string/continuar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasena2"
-        tools:text="REGISTRAR" />
+        tools:text="@string/cambioContrasena" />
 
     <EditText
         android:id="@+id/etContrasena2"
@@ -93,14 +93,15 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="@string/textview"
+        android:layout_marginTop="96dp"
+        android:text="@string/gen_contrasena"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Generar Contraseña" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

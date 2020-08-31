@@ -3,19 +3,22 @@ package com.example.medicinamovil.ObjetosNat;
 import java.time.LocalDate;
 
 public class Medicina {
-    private int id;
-    private String dosis;
-    private String nombre;
-    private String imagen;
     private String descripcion;
+    private String dosis;
+    private int id;
+    private String imagen;
+    private String nombre;
 
-    public Medicina(int id ,String nombre, String imagen,String descripcion,String dosis) {
-        this.id=id;
-        this.nombre = nombre;
+    public Medicina() {
+    }
+
+
+    public Medicina(String descripcion, String dosis, int id, String imagen, String nombre) {
+        this.descripcion = descripcion;
+        this.dosis = dosis;
+        this.id = id;
         this.imagen = imagen;
-        this.descripcion=descripcion;
-        this.dosis=dosis;
-
+        this.nombre = nombre;
     }
 
     public int getId() {

@@ -67,7 +67,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     }
 
     public void generarContrasena(View view){
-        Intent nuevaCuenta = new Intent(this, GenerarContrasenaActivity.class);
+        Intent nuevaCuenta = new Intent(this, GenerarContrasena.class);
         startActivity(nuevaCuenta);
         //finish();
     }

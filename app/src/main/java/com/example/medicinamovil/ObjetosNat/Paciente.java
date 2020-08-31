@@ -19,4 +19,6 @@ public class Paciente extends Usuario {
     public int getNumeroHabitacion() {
         return numeroHabitacion;
     }
+
+
 }

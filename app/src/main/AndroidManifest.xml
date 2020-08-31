@@ -18,7 +18,7 @@
         <activity android:name=".Fragments.InfoActivity" />
         <activity android:name=".PrincipalPacienteActivity" />
         <activity android:name=".IniciarSesionActivity" />
-        <activity android:name=".GenerarContrasenaActivity" />
+        <activity android:name=".GenerarContrasena" />
         <activity android:name=".InicioActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
