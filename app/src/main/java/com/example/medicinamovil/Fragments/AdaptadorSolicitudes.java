@@ -54,10 +54,10 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         idPaciente.setText(cedula);
         //nombreMedicina.setText(MainActivity.getSolicitudes().get(0)[0]);
         nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-        //Paciente p=obtenerPaciente(cedula);
+        Paciente p=obtenerPaciente(cedula);
        // System.out.println("=============================="+p);
         //System.out.println("========================"+p.getNombre());
-        //nombrePaciente.setText(p.getNombre());
+        nombrePaciente.setText(p.getNombre());
 
 //idPaciente.setText(info.get());
       //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
@@ -166,7 +166,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         ArrayList<Paciente> pacientes= MainActivity.getPacientes();
         for(Paciente p:pacientes){
             if(idUsuario.equals(p.getCedula())){
-                System.out.println(p.getCedula());
+                System.out.println("Cedulas pacientes================> "+p.getCedula());
                 return p;
             }
         }
