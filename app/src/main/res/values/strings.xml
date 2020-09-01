@@ -22,6 +22,7 @@
     <string name="num_cedula">Numero de cedula</string>
     <string name="gen_contrasena">Generar</string>
     <string name="cambioContrasena">GUARDAR</string>
+    <string name="solicitudes_pacientes">Solicitudes Pacientes</string>
 
 
 </resources>

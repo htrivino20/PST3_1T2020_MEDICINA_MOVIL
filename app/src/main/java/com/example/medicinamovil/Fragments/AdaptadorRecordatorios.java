@@ -101,8 +101,10 @@ public class AdaptadorRecordatorios extends BaseAdapter {
         HashMap<Integer, Medicina> dataMedicina =MainActivity.getDataMedicina();
         if(dataMedicina.containsKey(idMedicina)){
             return dataMedicina.get(idMedicina).getNombre();
+        }else{
+            return "No existe el id medicina";
         }
-        return "";
+
     }
     public void setDato(){
         //Verificar el cambio de estado de pastilla dentro de la receta y verificar que se actualicen los datos

@@ -71,7 +71,9 @@ public class FragmentEnfermeroSolicitud extends Fragment {
         listaRecordatorios=(ListView) view.findViewById(R.id.lvSolicitudes);
         ArrayList<String[]> info=obtenerMapa();
 
-        listaRecordatorios.setAdapter(new AdaptadorSolicitudes(view.getContext(), info));
+
+//AQUI ES DONDE SE CAE, ESPEREMOS APROBAR
+       listaRecordatorios.setAdapter(new AdaptadorSolicitudes(view.getContext(), info));
         return view;
     }
 
