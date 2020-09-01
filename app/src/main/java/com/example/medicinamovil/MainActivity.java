@@ -26,6 +26,8 @@ import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static String sensor;
     private ImageView imagenInicio;
     private String photo;
     private static HashMap<Integer, Medicina> dataMedicina =new HashMap<>();
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
     //REFERENCIA LECTURA SOLICITUDES
     private DatabaseReference db_referenceSoli;
+
+    //Referencia lectura solicitud
+    private DatabaseReference db_referenceSensor;
+
     private static ArrayList<Paciente> pacientes=new ArrayList<>();
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
     //private static ArrayList<Paciente> pacientesSinCambio = new ArrayList<>();
@@ -52,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
         //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
         db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
         db_referenceSoli=FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
+        db_referenceSensor=FirebaseDatabase.getInstance().getReference().child("Esp32");
 
         dataMedicina=solicitarMedicina();
         pacientes=solicitarPacientes();
         enfermeros=solicitarEnfermeros();
         solicitudes=solicitarSolicitudes();
-
+        SolitarSensor();
         iniciar();
         //pacientes.clear();
     }
@@ -350,5 +357,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public String SolitarSensor(){
+        db_referenceSensor.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    String cedulaEn = String.valueOf(snapshot.child("valor").getValue());
+                    System.out.println("El sensor tiene el valor de "+cedulaEn);
+                    sensor=cedulaEn;
+
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return sensor;
+
+
+
+
+
+
+    }
+
+    public static String getSensor() {
+        return sensor;
+
+    }
 
 }

@@ -98,6 +98,7 @@ public class FragmentPacienteSolicitud extends Fragment {
         adaptadorMedicamentos=new AdaptadorMedicamentos(view.getContext(), dataMedicina);
         listaMedicamentos.setAdapter(adaptadorMedicamentos);
         botonEnviarSolicitud=(Button)view.findViewById(R.id.botonEnviarSolicitud);
+        trackingEnvio();
 
         //SearchView
         searchView = (SearchView) view.findViewById(R.id.searchView);
@@ -177,6 +178,20 @@ public class FragmentPacienteSolicitud extends Fragment {
         } else {
             Toast.makeText(getActivity().getApplicationContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    public void trackingEnvio(){
+        String Valor= MainActivity.getSensor();
+        if(Valor.equals("0")){
+            Toast.makeText(getActivity().getApplicationContext(), "EL MEDICAMENTO HA SIDO ENTREGADO", Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+
     }
 
 
