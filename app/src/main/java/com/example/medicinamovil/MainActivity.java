@@ -298,7 +298,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
+
                     DataSnapshot medicinas = snapshot.child("idMedicina");
+
                     for (DataSnapshot mi: medicinas.getChildren()){
                         info.add(new String[]{cedulaEn, mi.getValue().toString()});
                         System.out.println(cedulaEn + "," + mi.getValue().toString());
@@ -341,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
         info.add( new String[]{"0123456791","1"});*/
         return info;
     }
+
 
     public static ArrayList<String[]> getSolicitudes(){
         //System.out.println("ESTO SON SOLICITUDES"+solicitudes);
