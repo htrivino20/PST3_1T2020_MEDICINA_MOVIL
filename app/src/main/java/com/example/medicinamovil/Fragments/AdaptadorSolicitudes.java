@@ -33,6 +33,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
     private static ArrayList<String> idUsuarios=new ArrayList<>();
     private Integer[] idMedicina;
     private DatabaseReference databaseReference;
+    private DatabaseReference dataR;
 
     String cedula;
     String nombre;
@@ -52,6 +53,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         final View vista = inflater.inflate(R.layout.elementos_lista_solicitudes, null);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
+        dataR = FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUD_FI);
         for (String[] a : info) {
             idUsuarios.add(a[0]);
         }
@@ -122,7 +124,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
             public void onClick(View v) {
                 final int idTag=(Integer) v.getTag();
                 System.out.println("Numero: "+ idTag);
-                Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
+                final Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
                 final String idMedicina= info.get((Integer) v.getTag())[1];
                 final Integer idRemover = Integer.parseInt(idMedicina);
                 System.out.println("idMedicina" + idMedicina);
@@ -135,15 +137,17 @@ public class AdaptadorSolicitudes extends BaseAdapter {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot data: dataSnapshot.getChildren()){
                             String cedula = String.valueOf(data.child("cedula").getValue());
-                            //DataSnapshot medicinasData = data.child("")
-                            //Integer inte = (Integer)data.child(idMedicina).getValue();
-                            DataSnapshot idMedicinas = data.child("idMedicina");
+                            if (cedula.equals(p.getCedula())){
+                                String id = String.valueOf(data.child("idMedicina").getValue());
+                                if(id.equals(idMedicina)){
+                                    databaseReference.child(data.getKey()).removeValue();
+                                    dataR.child("ruta").setValue(p.getNumeroHabitacion()) ;
+                                    dataR.child("valor").setValue(1);
+                                    dataR.child("estado").setValue("Aceptada");
+                                }else{
 
-                            /*Integer integer = (Integer) idMedicinas.getValue();
-                            if(integer == idRemover){
-
-                            }*/
-
+                                }
+                            }
                         }
                     }
 
@@ -165,8 +169,10 @@ public class AdaptadorSolicitudes extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 int idTag=(Integer) v.getTag();
-                Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
+                final Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
                 info.remove(idTag);
+
+
 
                 Toast.makeText(v.getContext(),"Se han rechazado la solicitud",Toast.LENGTH_SHORT).show();
 

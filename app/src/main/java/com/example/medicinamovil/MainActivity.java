@@ -13,6 +13,7 @@ import com.example.medicinamovil.ObjetosNat.Enfermero;
 import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.ObjetosNat.Paciente;
 import com.example.medicinamovil.ObjetosNat.Usuario;
+import com.example.medicinamovil.ObjetosNat.Variables;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         db_reference= FirebaseDatabase.getInstance().getReference().child("Medicina");
         //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
         db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
-        db_referenceSoli=FirebaseDatabase.getInstance().getReference().child("Solicitudes");
+        db_referenceSoli=FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
 
         dataMedicina=solicitarMedicina();
         pacientes=solicitarPacientes();
@@ -298,13 +299,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
+                    String idM = String.valueOf(snapshot.child("idMedicina").getValue());
+                    info.add(new String[]{cedulaEn, idM});
 
-                    DataSnapshot medicinas = snapshot.child("idMedicina");
-
-                    for (DataSnapshot mi: medicinas.getChildren()){
-                        info.add(new String[]{cedulaEn, mi.getValue().toString()});
-                        System.out.println(cedulaEn + "," + mi.getValue().toString());
-                    }
                     //String idmedicinas = String.valueOf(snapshot.child("Medicinas").child("0").child("id").getValue());
                     //info.add(new String[]{cedulaEn,idmedicinas});
 

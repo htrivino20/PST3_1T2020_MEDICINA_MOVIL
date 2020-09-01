@@ -19,7 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class AlertActivity extends AppCompatActivity {
 
@@ -83,26 +85,31 @@ public class AlertActivity extends AppCompatActivity {
 
         System.out.println("LONGITUD: " + items.size());
        // for (Integer i: idMedicamentosSolicitados) {
-
+        String[] arreglo = idmedicamentos.split(" ");
+        List<String> contenedorId = Arrays.asList(arreglo);
+        for(int i = 0; i< contenedorId.size(); i++){
+            System.out.println("A VER CHUCHA : " + contenedorId.get(i));
             if (items.size() > 0) {
                 String clave = items.get(items.size() - 1).getKey().toString();
                 Integer cambio = Integer.parseInt(clave);
-                String claveAgg = String.valueOf(cambio + 1);
-                String [] array = idmedicamentos.split(" ");
-                System.out.println(array.toString());
-                for (Integer i: idMedicamentosSolicitados){
+                String claveAgg = String.valueOf(cambio + 1 + i);
                 db_reference.child(claveAgg).child("cedula").setValue(idCedula);
-                db_reference.child(claveAgg).child("idMedicina").setValue(idmedicamentos);
+                db_reference.child(claveAgg).child("idMedicina").setValue(Integer.parseInt(contenedorId.get(i)));
 
-                }
-
-
-            } else {
+            }else {
                 //for (Integer i : idMedicamentosSolicitados) {
-                db_reference.child("1").child("cedula").setValue(idCedula);
-                db_reference.child("1").child("idMedicina").setValue(idMedicamentosSolicitados);
+                String clave2 = String.valueOf(1+i);
+                db_reference.child(clave2).child("cedula").setValue(idCedula);
+                db_reference.child(clave2).child("idMedicina").setValue(Integer.parseInt(contenedorId.get(i)));
                 //}
-         }
+
+
+            }
+
+        }
+
+
+
 
 
             Toast.makeText(getApplicationContext(), "Su solicitud ha sido enviada", Toast.LENGTH_SHORT).show();
