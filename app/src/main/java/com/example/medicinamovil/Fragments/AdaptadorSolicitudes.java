@@ -47,12 +47,12 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         TextView nombrePaciente = (TextView) vista.findViewById(R.id.tvNombrePaciente);
         TextView idPaciente = (TextView) vista.findViewById(R.id.tvId);
 
-        nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-        Paciente p=obtenerPaciente(idUsuarios.get(i));
-        nombrePaciente.setText(p.getNombre());
+      //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
+       // Paciente p=obtenerPaciente(idUsuarios.get(i));
+        //nombrePaciente.setText(p.getNombre());
 
 
-        idPaciente.setText(p.getCedula());
+        //idPaciente.setText(p.getCedula());
 
 
 /*
@@ -84,14 +84,14 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         //TextView habitacion = (TextView) vista.findViewById(R.id.tvHabitacion);
 
 
-        ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
-        ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
+        //ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
+        //ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
 
 
 
-        aceptar.setTag(i);
-        rechazar.setTag(i);
-        aceptar.setOnClickListener(new View.OnClickListener() {
+        //aceptar.setTag(i);
+        //rechazar.setTag(i);
+        /*aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int idTag=(Integer) v.getTag();
@@ -116,7 +116,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
 
                 notifyDataSetChanged();
             }
-        });
+        }); */
         return vista;
     }
 
