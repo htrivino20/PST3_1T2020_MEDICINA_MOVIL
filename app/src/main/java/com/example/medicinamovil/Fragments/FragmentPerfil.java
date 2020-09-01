@@ -20,6 +20,8 @@ import com.example.medicinamovil.R;
 public class FragmentPerfil extends Fragment {
     String datos;
     TextView nombre;
+    TextView cedula;
+
     View vista;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,9 +68,24 @@ public class FragmentPerfil extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista=inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        //Inicializando las variables del
         nombre=(TextView)vista.findViewById(R.id.txtNombre);
-        nombre.setText(MainActivity.getUser().getNombre());
+        cedula=(TextView)vista.findViewById(R.id.textCedula);
+
+        //Se carga los datos
+        cargarPerfil();
+
+
 
         return vista;
+    }
+
+    public void cargarPerfil(){
+
+        nombre.setText(MainActivity.getUser().getNombre());
+        cedula.setText(MainActivity.getUser().getCedula());
+
+
     }
 }

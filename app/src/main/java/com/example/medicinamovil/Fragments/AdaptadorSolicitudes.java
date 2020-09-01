@@ -25,6 +25,8 @@ public class AdaptadorSolicitudes extends BaseAdapter {
     private static ArrayList<String> idUsuarios=new ArrayList<>();
     private Integer[] idMedicina;
 
+    String cedula;
+    String nombre;
 
     public AdaptadorSolicitudes(Context contexto, ArrayList <String[]> info) {
         // La clave es la cedula del usuario y el valor es el id de la medicina
@@ -46,9 +48,20 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvMedicina);
         TextView nombrePaciente = (TextView) vista.findViewById(R.id.tvNombrePaciente);
         TextView idPaciente = (TextView) vista.findViewById(R.id.tvId);
+        cedula=MainActivity.getSolicitudes().get(0)[0];
+        System.out.println("ESTAS SON SOLICITUDES=======>"+cedula);
+        System.out.println("ESTAS SON SOLICITUDES id "+MainActivity.getSolicitudes().get(0)[1]);
+        idPaciente.setText(cedula);
+        //nombreMedicina.setText(MainActivity.getSolicitudes().get(0)[0]);
+        nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
+        //Paciente p=obtenerPaciente(cedula);
+       // System.out.println("=============================="+p);
+        //System.out.println("========================"+p.getNombre());
+        //nombrePaciente.setText(p.getNombre());
 
+//idPaciente.setText(info.get());
       //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-       // Paciente p=obtenerPaciente(idUsuarios.get(i));
+       // Paciente p=obtenerPaciente(c);
         //nombrePaciente.setText(p.getNombre());
 
 
@@ -137,6 +150,9 @@ public class AdaptadorSolicitudes extends BaseAdapter {
     }
 
 
+    //METODO QUE OBTIENE EL NOMBRE DE LA MEDICINA
+    //A traves de su Id
+
     public String obtenerNombreMedicina(int idMedicina){
         HashMap<Integer, Medicina> dataMedicina = MainActivity.getDataMedicina();
         if(dataMedicina.containsKey(idMedicina)){
@@ -150,6 +166,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         ArrayList<Paciente> pacientes= MainActivity.getPacientes();
         for(Paciente p:pacientes){
             if(idUsuario.equals(p.getCedula())){
+                System.out.println(p.getCedula());
                 return p;
             }
         }
