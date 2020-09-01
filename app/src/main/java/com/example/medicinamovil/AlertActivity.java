@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,14 @@ public class AlertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_alert);
+
+        DisplayMetrics medidasVentana = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(medidasVentana);
+
+        int ancho= medidasVentana.widthPixels;
+        int alto = medidasVentana.heightPixels;
+
+        getWindow().setLayout((int) (ancho*0.7), (int) (alto*0.7));
         TextView medicinas = (TextView) findViewById(R.id.tvMedicinas);
 
         ImageView imagenMedicina = (ImageView) findViewById(R.id.ivAlerta);

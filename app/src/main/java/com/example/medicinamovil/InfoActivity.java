@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,15 @@ public class InfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info3);
+
+        DisplayMetrics medidasVentana = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(medidasVentana);
+
+        int ancho= medidasVentana.widthPixels;
+        int alto = medidasVentana.heightPixels;
+
+        getWindow().setLayout((int) (ancho*0.7), (int) (alto*0.7));
+
         TextView nombre = (TextView) findViewById(R.id.tvNombreMedicamento);
         TextView descripcion = (TextView) findViewById(R.id.tvDescripcion);
 
