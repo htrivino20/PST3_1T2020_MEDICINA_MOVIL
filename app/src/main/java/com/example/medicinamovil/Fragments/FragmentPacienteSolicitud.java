@@ -135,17 +135,19 @@ public class FragmentPacienteSolicitud extends Fragment {
                     ArrayList<Integer> idMedicamentosKe = new ArrayList<>();
                     for (Integer i:idmedicamentosSolicitados){
                         medicamentos=medicamentos+dataMedicina.get(i)+" ";
-                        //idmedicamentos=idmedicamentos+i.toString()+" ";
+                        idmedicamentos=idmedicamentos+i.toString()+" ";
                         System.out.println("MEDICAMENTOS SOLICITADOS");
                         idMedicamentosKe.add(i);
-                        //System.out.println(idmedicamentos);
+                        System.out.println(idmedicamentos);
                     }
                     AdaptadorMedicamentos.clearTags();
                     Intent cuadroAlerta = new Intent(view.getContext(), AlertActivity.class);
 
                     cuadroAlerta.putExtra("medicinas", medicamentos);
                     cuadroAlerta.putExtra("idmedicinas", idmedicamentos);
+                   // System.out.println("idmedicinas" + idmedicamentos);
                     cuadroAlerta.putExtra("idmedicinasSolicitadas", idMedicamentosKe);
+                    System.out.println("ID MEDICINAS SOLICITADAS" + idMedicamentosKe.toString());
                     String idCedulaUsuario = (String)getArguments().getString("idCedulaUsuario");
                     cuadroAlerta.putExtra("idCedulaUsuario", idCedulaUsuario);
 

@@ -43,7 +43,7 @@ void setup() {
   Serial.println();
   Serial.print("Wifi Conectado");
   Serial.println("Direccion IP: ");
-  Serial.println(WiFi.localIP());
+  //Serial.println(WiFi.localIP());
 
   //Manejar FIrebase
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);

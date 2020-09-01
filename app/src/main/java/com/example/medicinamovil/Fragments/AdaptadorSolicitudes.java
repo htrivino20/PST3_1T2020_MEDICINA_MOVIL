@@ -9,11 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.ObjetosNat.Paciente;
 import com.example.medicinamovil.ObjetosNat.Usuario;
+import com.example.medicinamovil.ObjetosNat.Variables;
 import com.example.medicinamovil.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +32,11 @@ public class AdaptadorSolicitudes extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private static ArrayList<String> idUsuarios=new ArrayList<>();
     private Integer[] idMedicina;
+    private DatabaseReference databaseReference;
 
     String cedula;
     String nombre;
-
+    Integer idMedicinaE;
     public AdaptadorSolicitudes(Context contexto, ArrayList <String[]> info) {
         // La clave es la cedula del usuario y el valor es el id de la medicina
         this.contexto = contexto;
@@ -41,9 +50,12 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         //0 es id usuario y 1 es id medicina
         idUsuarios.clear();
         final View vista = inflater.inflate(R.layout.elementos_lista_solicitudes, null);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
         for (String[] a : info) {
             idUsuarios.add(a[0]);
         }
+        System.out.println("MATRIZ ENTRADA: "+info.size());
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvMedicina);
         TextView nombrePaciente = (TextView) vista.findViewById(R.id.tvNombrePaciente);
@@ -55,20 +67,20 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         //nombreMedicina.setText(MainActivity.getSolicitudes().get(0)[0]);
         nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
         Paciente p=obtenerPaciente(cedula);
-       // System.out.println("=============================="+p);
+        // System.out.println("=============================="+p);
         //System.out.println("========================"+p.getNombre());
         nombrePaciente.setText(p.getNombre());
 
-//idPaciente.setText(info.get());
-      //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-       // Paciente p=obtenerPaciente(c);
+        //idPaciente.setText(info.get());
+        //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
+        // Paciente p=obtenerPaciente(c);
         //nombrePaciente.setText(p.getNombre());
 
 
         //idPaciente.setText(p.getCedula());
 
 
-/*
+      /*
         habitaciones.clear();
         final View vista = inflater.inflate(R.layout.elementos_lista_recordatorios, null);
         for (Integer habitacion : info.keySet()) {
@@ -90,26 +102,57 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         hora.setText(info.get(habitaciones.get(i))[1]);
         habitacion.setText("Habitacion: "+Integer.toString(habitaciones.get(i)));
         ImageView enviar= (ImageView) vista.findViewById(R.id.ivSend);
-*/
+
 
         //TextView idUsuario = (TextView) vista.findViewById(R.id.tvNombreUsuario);
         //TextView id = (TextView) vista.findViewById(R.id.tvHora);
         //TextView habitacion = (TextView) vista.findViewById(R.id.tvHabitacion);
 
+    */
+        ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
+        ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
 
-        //ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
-        //ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
 
 
+        aceptar.setTag(i);
+        rechazar.setTag(i);
 
-        //aceptar.setTag(i);
-        //rechazar.setTag(i);
-        /*aceptar.setOnClickListener(new View.OnClickListener() {
+        aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int idTag=(Integer) v.getTag();
+                final int idTag=(Integer) v.getTag();
+                System.out.println("Numero: "+ idTag);
                 Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
+                final String idMedicina= info.get((Integer) v.getTag())[1];
+                final Integer idRemover = Integer.parseInt(idMedicina);
+                System.out.println("idMedicina" + idMedicina);
                 info.remove(idTag);
+
+                final String idPaciente = p.getCedula();
+
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data: dataSnapshot.getChildren()){
+                            String cedula = String.valueOf(data.child("cedula").getValue());
+                            //DataSnapshot medicinasData = data.child("")
+                            //Integer inte = (Integer)data.child(idMedicina).getValue();
+                            DataSnapshot idMedicinas = data.child("idMedicina");
+
+                            /*Integer integer = (Integer) idMedicinas.getValue();
+                            if(integer == idRemover){
+
+                            }*/
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
                 //
                 //AQUI TAMBIEN SE DEBE ENVIAR A LA BASE DE DATOS LA SEÑAL DE ENVIO
                 setDato();
@@ -129,7 +172,7 @@ public class AdaptadorSolicitudes extends BaseAdapter {
 
                 notifyDataSetChanged();
             }
-        }); */
+        });
         return vista;
     }
 

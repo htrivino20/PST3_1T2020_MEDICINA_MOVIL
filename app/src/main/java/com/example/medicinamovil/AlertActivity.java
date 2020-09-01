@@ -28,6 +28,7 @@ public class AlertActivity extends AppCompatActivity {
     ArrayList<DataSnapshot> items = new ArrayList<>();
     private DatabaseReference db_reference;
     private String idCedula;
+    String idmedicamentos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,8 @@ public class AlertActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         db_reference = FirebaseDatabase.getInstance().getReference().child("Solicitudes");
-        String idmedicamentos=(String) b.get("idmedicinas");
+         idmedicamentos=(String) b.get("idmedicinas");
+        System.out.println("Cuantos ids de medicamentos: " + idmedicamentos);
         idCedula = (String) b.get("idCedulaUsuario");
         idMedicamentosSolicitados = (ArrayList<Integer>) b.get("idmedicinasSolicitadas");
 
@@ -78,41 +80,38 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     public void enviar(View view){
+
         System.out.println("LONGITUD: " + items.size());
+       // for (Integer i: idMedicamentosSolicitados) {
 
-        if(items.size() > 0){
-            String clave = items.get(items.size()-1).getKey().toString();
-            Integer cambio = Integer.parseInt(clave);
-            String claveAgg = String.valueOf(cambio +1);
-            db_reference.child(claveAgg).child("cedula").setValue(idCedula);
-            db_reference.child(claveAgg).child("Medicinas").setValue(agregarSolicitudBaseDatos());
+            if (items.size() > 0) {
+                String clave = items.get(items.size() - 1).getKey().toString();
+                Integer cambio = Integer.parseInt(clave);
+                String claveAgg = String.valueOf(cambio + 1);
+                String [] array = idmedicamentos.split(" ");
+                System.out.println(array.toString());
+                for (Integer i: idMedicamentosSolicitados){
+                db_reference.child(claveAgg).child("cedula").setValue(idCedula);
+                db_reference.child(claveAgg).child("idMedicina").setValue(idmedicamentos);
 
-        }else {
-            db_reference.child("1").child("cedula").setValue(idCedula);
-            db_reference.child("1").child("Medicinas").setValue(agregarSolicitudBaseDatos());
-        }
+                }
 
-        Toast.makeText(getApplicationContext(),"Su solicitud ha sido enviada", Toast.LENGTH_SHORT).show();
 
+            } else {
+                //for (Integer i : idMedicamentosSolicitados) {
+                db_reference.child("1").child("cedula").setValue(idCedula);
+                db_reference.child("1").child("idMedicina").setValue(idMedicamentosSolicitados);
+                //}
+         }
+
+
+            Toast.makeText(getApplicationContext(), "Su solicitud ha sido enviada", Toast.LENGTH_SHORT).show();
+        //}
         finish();
     }
 
     public void salir(View view){
         finish();
     }
-
-    public ArrayList<Medicina> agregarSolicitudBaseDatos(){
-        //DataSnapshot dataSnapshot = new DataSnapshot();
-        //DatabaseReference dbR = new DatabaseReference()
-        ArrayList<Medicina> medicinasAgg = new ArrayList<>();
-        HashMap<Integer, Medicina> medicamentosMapa = MainActivity.getDataMedicina();
-        for (Integer i: idMedicamentosSolicitados
-             ) {
-            Medicina medicina = medicamentosMapa.get(i);
-            medicinasAgg.add(medicina);
-        }
-        return medicinasAgg;
-    }
-
 
 }

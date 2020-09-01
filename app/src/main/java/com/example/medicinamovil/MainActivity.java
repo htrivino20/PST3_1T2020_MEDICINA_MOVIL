@@ -298,10 +298,16 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
-                    String idmedicinas = String.valueOf(snapshot.child("Medicinas").child("0").child("id").getValue());
-                    info.add(new String[]{cedulaEn,idmedicinas});
-                    System.out.println("CedulaParaSoli===========> "+cedulaEn);
-                    System.out.println("IdParaSoli===========> "+idmedicinas);
+                    DataSnapshot medicinas = snapshot.child("idMedicina");
+                    for (DataSnapshot mi: medicinas.getChildren()){
+                        info.add(new String[]{cedulaEn, mi.getValue().toString()});
+                        System.out.println(cedulaEn + "," + mi.getValue().toString());
+                    }
+                    //String idmedicinas = String.valueOf(snapshot.child("Medicinas").child("0").child("id").getValue());
+                    //info.add(new String[]{cedulaEn,idmedicinas});
+
+                    //System.out.println("CedulaParaSoli===========> "+cedulaEn);
+                    //System.out.println("IdParaSoli===========> "+idmedicinas);
                    /* HashMap<Integer, String[]> MediMapa=new HashMap<>();
 
 
