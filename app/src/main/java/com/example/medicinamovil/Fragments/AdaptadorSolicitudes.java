@@ -66,51 +66,10 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         System.out.println("ESTAS SON SOLICITUDES=======>"+cedula);
         System.out.println("ESTAS SON SOLICITUDES id "+MainActivity.getSolicitudes().get(0)[1]);
         idPaciente.setText(cedula);
-        //nombreMedicina.setText(MainActivity.getSolicitudes().get(0)[0]);
         nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
         Paciente p=obtenerPaciente(cedula);
-        // System.out.println("=============================="+p);
-        //System.out.println("========================"+p.getNombre());
         nombrePaciente.setText(p.getNombre());
 
-        //idPaciente.setText(info.get());
-        //  nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-        // Paciente p=obtenerPaciente(c);
-        //nombrePaciente.setText(p.getNombre());
-
-
-        //idPaciente.setText(p.getCedula());
-
-
-      /*
-        habitaciones.clear();
-        final View vista = inflater.inflate(R.layout.elementos_lista_recordatorios, null);
-        for (Integer habitacion : info.keySet()) {
-            habitaciones.add(habitacion);
-        }
-        //String 0 debe ser el id de la pastilla
-        //String 1 debe ser la hora
-        for(Integer habitacion:habitaciones){
-            System.out.println("HABITACION DENTRO DE HABITACIONES"+habitacion);
-        }
-
-
-        TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvNombreMedicina);
-        TextView hora = (TextView) vista.findViewById(R.id.tvHora);
-        TextView habitacion = (TextView) vista.findViewById(R.id.tvHabitacion);
-
-
-        nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(habitaciones.get(i))[0])));
-        hora.setText(info.get(habitaciones.get(i))[1]);
-        habitacion.setText("Habitacion: "+Integer.toString(habitaciones.get(i)));
-        ImageView enviar= (ImageView) vista.findViewById(R.id.ivSend);
-
-
-        //TextView idUsuario = (TextView) vista.findViewById(R.id.tvNombreUsuario);
-        //TextView id = (TextView) vista.findViewById(R.id.tvHora);
-        //TextView habitacion = (TextView) vista.findViewById(R.id.tvHabitacion);
-
-    */
         ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
         ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
 

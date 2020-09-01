@@ -82,6 +82,9 @@ public class FragmentEnfermeroSolicitud extends Fragment {
 
     private ArrayList<String[]> obtenerMapa(){
         ArrayList<String[]> info=MainActivity.getSolicitudes();
+        for(String[] inf:info){
+            System.out.println(inf[0]+"   "+inf[1]);
+        }
         return info;
     }
 }

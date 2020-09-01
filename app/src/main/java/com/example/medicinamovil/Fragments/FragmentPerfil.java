@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.medicinamovil.MainActivity;
+import com.example.medicinamovil.ObjetosNat.Enfermero;
 import com.example.medicinamovil.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +34,9 @@ public class FragmentPerfil extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    String fotoPaciente="https://www.shareicon.net/data/128x128/2017/01/06/868320_people_512x512.png";
+    String fotoEnfermero= "https://www.shareicon.net/data/128x128/2016/08/18/813852_people_512x512.png";
+    ImageView fotoUsuariop;
 
     public FragmentPerfil() {
         // Required empty public constructor
@@ -74,18 +80,28 @@ public class FragmentPerfil extends Fragment {
         cedula=(TextView)vista.findViewById(R.id.textCedula);
 
         //Se carga los datos
-        cargarPerfil();
+        cargarPerfil(vista);
 
 
 
         return vista;
     }
 
-    public void cargarPerfil(){
+    public void cargarPerfil(View vista){
 
         nombre.setText(MainActivity.getUser().getNombre());
         cedula.setText(MainActivity.getUser().getCedula());
+        fotoUsuariop = (ImageView)vista.findViewById(R.id.ivUsuario);
 
+        if(MainActivity.getUser() instanceof Enfermero){
+            Picasso.get().load(fotoEnfermero).into(fotoUsuariop);
+        }
+        else{
+            Picasso.get().load(fotoPaciente).into(fotoUsuariop);
+        }
+    }
 
+    public void cerrarApp(View vista){
+        //System.exit(1);
     }
 }
