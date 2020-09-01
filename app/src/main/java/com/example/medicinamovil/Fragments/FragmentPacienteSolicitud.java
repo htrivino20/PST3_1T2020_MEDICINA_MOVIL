@@ -134,12 +134,12 @@ public class FragmentPacienteSolicitud extends Fragment {
                 if(!(idmedicamentosSolicitados.isEmpty())){
                     ArrayList<Integer> idMedicamentosKe = new ArrayList<>();
                     for (Integer i:idmedicamentosSolicitados){
-                        medicamentos=medicamentos+dataMedicina.get(i)+" ";
+                        medicamentos=medicamentos+dataMedicina.get(i)+", ";
                         idmedicamentos=idmedicamentos+i.toString()+" ";
-                        System.out.println("MEDICAMENTOS SOLICITADOS");
                         idMedicamentosKe.add(i);
                         System.out.println(idmedicamentos);
                     }
+                    medicamentos=medicamentos.substring(0,medicamentos.length()-3);
                     AdaptadorMedicamentos.clearTags();
                     Intent cuadroAlerta = new Intent(view.getContext(), AlertActivity.class);
 

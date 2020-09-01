@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
     //private static ArrayList<Paciente> pacientesSinCambio = new ArrayList<>();
     private static Usuario usuarioGeneral;
-    private static ArrayList<String[]> solicitudes;
+    private static ArrayList<String[]> solicitudes=new ArrayList<>();
 
     private Medicina medicina;
 
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         //CREACION DE LA  RECETA POR CADA PACIENTE
 
                         //DatabaseReference receta = db_referenceUsu.child(cedulaPA).child("receta");
-                        System.out.println("AQUIII LAS RECETAS");
+                        //System.out.println("AQUIII LAS RECETAS");
                         HashMap<Integer, String[]> recetasMapa=new HashMap<>();
                         DataSnapshot recetas = snapshot.child("receta");
                         for (DataSnapshot r: recetas.getChildren()){
@@ -293,14 +293,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<String[]> solicitarSolicitudes(){
-        final ArrayList<String[]> info=new ArrayList<>();
+        solicitudes.clear();
+
+        final ArrayList<String[]> inf=new ArrayList<>();
         db_referenceSoli.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
                     String idM = String.valueOf(snapshot.child("idMedicina").getValue());
-                    info.add(new String[]{cedulaEn, idM});
+                    inf.add(new String[]{cedulaEn, idM});
 
                     //String idmedicinas = String.valueOf(snapshot.child("Medicinas").child("0").child("id").getValue());
                     //info.add(new String[]{cedulaEn,idmedicinas});
@@ -338,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         info.add(new String[]{"0123456790","4"});
         info.add( new String[]{"0123456791","3"});
         info.add( new String[]{"0123456791","1"});*/
-        return info;
+        return inf;
     }
 
 

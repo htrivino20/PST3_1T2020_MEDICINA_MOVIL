@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.R;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -70,18 +71,22 @@ public class FragmentEnfermeroSolicitud extends Fragment {
         View view = inflater.inflate(R.layout.fragment_enfermero_solicitud, container, false);
         listaRecordatorios=(ListView) view.findViewById(R.id.lvSolicitudes);
         ArrayList<String[]> info=obtenerMapa();
+        System.out.println("LUEGO DE OBTENER EL MAPA DE INFO");
+
+        for(String[] inf:info){
+            System.out.println(inf[0]+"   "+inf[1]);
+        }
 
 
 //AQUI ES DONDE SE CAE, ESPEREMOS APROBAR
         AdaptadorSolicitudes adaptadorSolicitudes = new AdaptadorSolicitudes(view.getContext(),info);
-        System.out.println("QUE HAY EN EL ARRAY INFO");
-        System.out.println(info.toString());
         listaRecordatorios.setAdapter(adaptadorSolicitudes);
         return view;
     }
 
     private ArrayList<String[]> obtenerMapa(){
         ArrayList<String[]> info=MainActivity.getSolicitudes();
+        System.out.println("OBTENIENDO EL VALOR DE INFO");
         for(String[] inf:info){
             System.out.println(inf[0]+"   "+inf[1]);
         }

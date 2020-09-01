@@ -1,6 +1,7 @@
 package com.example.medicinamovil.Fragments;
 
 import android.content.Context;
+import android.media.MediaRouter2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,9 +37,6 @@ public class AdaptadorSolicitudes extends BaseAdapter {
     private DatabaseReference databaseReference;
     private DatabaseReference dataR;
 
-    String cedula;
-    String nombre;
-    Integer idMedicinaE;
     public AdaptadorSolicitudes(Context contexto, ArrayList <String[]> info) {
         // La clave es la cedula del usuario y el valor es el id de la medicina
         this.contexto = contexto;
@@ -57,17 +56,14 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         for (String[] a : info) {
             idUsuarios.add(a[0]);
         }
-        System.out.println("MATRIZ ENTRADA: "+info.size());
 
         TextView nombreMedicina = (TextView) vista.findViewById(R.id.tvMedicina);
         TextView nombrePaciente = (TextView) vista.findViewById(R.id.tvNombrePaciente);
         TextView idPaciente = (TextView) vista.findViewById(R.id.tvId);
-        cedula=MainActivity.getSolicitudes().get(0)[0];
-        System.out.println("ESTAS SON SOLICITUDES=======>"+cedula);
-        System.out.println("ESTAS SON SOLICITUDES id "+MainActivity.getSolicitudes().get(0)[1]);
-        idPaciente.setText(cedula);
+
+        idPaciente.setText(info.get(i)[0]);
         nombreMedicina.setText(obtenerNombreMedicina(Integer.parseInt(info.get(i)[1])));
-        Paciente p=obtenerPaciente(cedula);
+        Paciente p=obtenerPaciente(info.get(i)[0]);
         nombrePaciente.setText(p.getNombre());
 
         ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);

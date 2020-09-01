@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Solicitar medicamentos"
+            android:textColor="#000000"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +40,8 @@
             android:id="@+id/searchView"
             android:layout_width="405dp"
             android:layout_height="54dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/barra"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -46,7 +49,8 @@
         <ListView
             android:id="@+id/lvMedicamentos"
             android:layout_width="407dp"
-            android:layout_height="440dp"
+            android:layout_height="406dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
