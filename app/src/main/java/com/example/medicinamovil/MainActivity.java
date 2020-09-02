@@ -2,8 +2,16 @@ package com.example.medicinamovil;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -40,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Referencia lectura solicitud
     private DatabaseReference db_referenceSensor;
+    private DatabaseReference db_referenceNotificacion;
+
 
     private static ArrayList<Paciente> pacientes=new ArrayList<>();
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
@@ -48,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<String[]> solicitudes=new ArrayList<>();
 
     private Medicina medicina;
+    private String valorNotificacion;
+    private int id=0;
+    private NotificationManager mNotificationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
         db_referenceSoli=FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
         db_referenceSensor=FirebaseDatabase.getInstance().getReference().child("Esp32");
+        db_referenceNotificacion=FirebaseDatabase.getInstance().getReference().child("Solicitud");
+
 
         dataMedicina=solicitarMedicina();
         pacientes=solicitarPacientes();
@@ -74,9 +90,63 @@ public class MainActivity extends AppCompatActivity {
         imagenInicio = (ImageView)findViewById(R.id.imagenInicio);
         Picasso.get().load(photo).into(imagenInicio);
         Intent i = new Intent(this, InicioActivity.class);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db_referenceNotificacion.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        valorNotificacion= String.valueOf(dataSnapshot.child("valor").getValue());
+                        if(valorNotificacion.equals("1")){
+                            imprimirNotificacion();
+
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        }).start();
+
+
+        //LecturaNotificacion ln=new LecturaNotificacion();
+        //ln.start();
         sleepImage h1 = new sleepImage(i);
         h1.start();
     }
+
+    public void imprimirNotificacion(){
+        System.out.println("VALOR NOTIFICACION"+valorNotificacion);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this.getApplicationContext(), "notify_001");
+        Intent ii = new Intent(this, InicioActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, ii, 0);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle().bigText("Su pastilla ha llegado").setBigContentTitle("¡Alerta!");
+
+        mBuilder.setContentIntent(pendingIntent).setSmallIcon(R.mipmap.ic_launcher_round).setContentTitle("Your Title").setContentText("Your text").setPriority(Notification.PRIORITY_MAX).setStyle(bigText);
+        mNotificationManager =
+                (NotificationManager) (MainActivity.this).getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "Your_channel_id";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+        id++;
+        mNotificationManager.notify(1, mBuilder.build());
+
+    }
+
 
     class sleepImage extends Thread{
         Intent i;
@@ -94,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     public HashMap<Integer, Medicina> solicitarMedicina(){
         db_reference.addValueEventListener(new ValueEventListener() {
@@ -300,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<String[]> solicitarSolicitudes(){
-        solicitudes.clear();
+        //solicitudes.clear();
 
         final ArrayList<String[]> inf=new ArrayList<>();
         db_referenceSoli.addValueEventListener(new ValueEventListener() {
@@ -365,10 +436,6 @@ public class MainActivity extends AppCompatActivity {
                     String cedulaEn = String.valueOf(snapshot.child("valor").getValue());
                     System.out.println("El sensor tiene el valor de "+cedulaEn);
                     sensor=cedulaEn;
-
-
-
-
                 }
 
             }
@@ -379,13 +446,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return sensor;
-
-
-
-
-
-
     }
+    class LecturaNotificacion extends Thread{
+
+
+        public String solicitarNotificacion(){
+            db_referenceNotificacion.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                        String cedulaEn = String.valueOf(snapshot.child("valor").getValue());
+                        valorNotificacion=cedulaEn;
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            System.out.println("VALOR NOTIFICACION"+valorNotificacion);
+
+            return valorNotificacion;
+
+        }
+        //return dataMedicina;
+    }
+
 
     public static String getSensor() {
         return sensor;

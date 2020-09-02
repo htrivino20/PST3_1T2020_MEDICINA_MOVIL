@@ -1,5 +1,6 @@
 package com.example.medicinamovil.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,13 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.medicinamovil.AlertActivity;
 import com.example.medicinamovil.MainActivity;
 import com.example.medicinamovil.ObjetosNat.Enfermero;
+import com.example.medicinamovil.PrincipalEnfermeroActivity;
 import com.example.medicinamovil.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +31,7 @@ public class FragmentPerfil extends Fragment {
     String datos;
     TextView nombre;
     TextView cedula;
+    Button boton;
 
     View vista;
     // TODO: Rename parameter arguments, choose names that match
@@ -81,6 +89,13 @@ public class FragmentPerfil extends Fragment {
 
         //Se carga los datos
         cargarPerfil(vista);
+        boton=(Button) vista.findViewById(R.id.botonSalir);
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
 
 
@@ -101,7 +116,4 @@ public class FragmentPerfil extends Fragment {
         }
     }
 
-    public void cerrarApp(View vista){
-        //System.exit(1);
-    }
 }
