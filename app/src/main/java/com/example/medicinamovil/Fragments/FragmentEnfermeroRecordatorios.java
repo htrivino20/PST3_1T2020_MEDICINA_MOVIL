@@ -37,6 +37,8 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ArrayList<String[]> info=new ArrayList<>();
+
     ListView listaRecordatorios;
 
     public FragmentEnfermeroRecordatorios() {
@@ -84,7 +86,7 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
         //LisView de medicamentos
         //obtenerMedicamentos();
 
-        ArrayList<String[]> info=obtenerMapa();
+        info=obtenerMapa();
        // AdaptadorRecordatorios adaptadorRecordatorios = new AdaptadorRecordatorios(view.getContext(), info);
 
         //String idCedulaUsuario = (String)getArguments().getString("idCedulaUsuario");
@@ -96,6 +98,7 @@ public class FragmentEnfermeroRecordatorios extends Fragment {
     }
 
     private ArrayList<String[]> obtenerMapa(){
+        //info.clear();
         ArrayList<String[]> info=new ArrayList<>();
         ArrayList<Paciente> pacientes= MainActivity.getPacientes();
         for(Paciente paciente:pacientes){

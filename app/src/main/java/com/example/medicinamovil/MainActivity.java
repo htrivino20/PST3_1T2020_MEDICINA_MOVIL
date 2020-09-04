@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<String[]> solicitarSolicitudes(){
-        solicitudes.clear();
+        //solicitudes.clear();
 
         final ArrayList<String[]> inf=new ArrayList<>();
         db_referenceSoli.addValueEventListener(new ValueEventListener() {
