@@ -69,8 +69,6 @@ public class AdaptadorSolicitudes extends BaseAdapter {
         ImageView aceptar= (ImageView) vista.findViewById(R.id.ivCheck);
         ImageView rechazar= (ImageView) vista.findViewById(R.id.ivCross);
 
-
-
         aceptar.setTag(i);
         rechazar.setTag(i);
 
@@ -112,8 +110,6 @@ public class AdaptadorSolicitudes extends BaseAdapter {
                     }
                 });
 
-                //
-                //AQUI TAMBIEN SE DEBE ENVIAR A LA BASE DE DATOS LA SEÑAL DE ENVIO
                 setDato();
 
                 Toast.makeText(v.getContext(),"Se han enviado los medicamentos a la habitacion "+p.getNumeroHabitacion(),Toast.LENGTH_SHORT).show();
@@ -126,9 +122,6 @@ public class AdaptadorSolicitudes extends BaseAdapter {
                 int idTag=(Integer) v.getTag();
                 final Paciente p=obtenerPaciente(idUsuarios.get((Integer) v.getTag()));
                 info.remove(idTag);
-
-
-
                 Toast.makeText(v.getContext(),"Se han rechazado la solicitud",Toast.LENGTH_SHORT).show();
 
                 notifyDataSetChanged();

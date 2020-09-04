@@ -187,11 +187,6 @@ public class FragmentPacienteSolicitud extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(), "EL MEDICAMENTO HA SIDO ENTREGADO", Toast.LENGTH_LONG).show();
         }
 
-
-
-
-
-
     }
 
 

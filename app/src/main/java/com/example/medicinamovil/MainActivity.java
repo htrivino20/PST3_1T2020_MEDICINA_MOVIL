@@ -3,8 +3,6 @@ package com.example.medicinamovil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,10 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
-
 import com.example.medicinamovil.ObjetosNat.Enfermero;
 import com.example.medicinamovil.ObjetosNat.Medicina;
 import com.example.medicinamovil.ObjetosNat.Paciente;
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static ArrayList<Paciente> pacientes=new ArrayList<>();
     private static ArrayList<Enfermero> enfermeros=new ArrayList<>();
-    //private static ArrayList<Paciente> pacientesSinCambio = new ArrayList<>();
     private static Usuario usuarioGeneral;
     private static ArrayList<String[]> solicitudes=new ArrayList<>();
 
@@ -67,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Referencias Lecturas datos medicina
         db_reference= FirebaseDatabase.getInstance().getReference().child("Medicina");
         //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
         db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
@@ -82,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         solicitudes=solicitarSolicitudes();
         SolitarSensor();
         iniciar();
-        //pacientes.clear();
     }
 
     public void iniciar(){
@@ -381,27 +373,6 @@ public class MainActivity extends AppCompatActivity {
                     String cedulaEn = String.valueOf(snapshot.child("cedula").getValue());
                     String idM = String.valueOf(snapshot.child("idMedicina").getValue());
                     inf.add(new String[]{cedulaEn, idM});
-
-                    //String idmedicinas = String.valueOf(snapshot.child("Medicinas").child("0").child("id").getValue());
-                    //info.add(new String[]{cedulaEn,idmedicinas});
-
-                    //System.out.println("CedulaParaSoli===========> "+cedulaEn);
-                    //System.out.println("IdParaSoli===========> "+idmedicinas);
-                   /* HashMap<Integer, String[]> MediMapa=new HashMap<>();
-
-
-                    DataSnapshot medicinas = snapshot.child("Medicinas");
-
-
-                    for (DataSnapshot r: medicinas.getChildren()){
-
-                        String idPA = String.valueOf(r.child("id").getValue());
-                        int numId = Integer.parseInt(idPA);
-
-                        recetasMapa.put(numId,new String[]{hourPa,estadoPa});
-
-                    }*/
-
                 }
 
             }
@@ -413,17 +384,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //AQUI SE DEBE REALIZAR LA LECTURA DE TODAS LAS SOLICITUDES
-        /*info.add(new String[]{"0123456789","1"});
-        info.add(new String[]{"0123456790","4"});
-        info.add( new String[]{"0123456791","3"});
-        info.add( new String[]{"0123456791","1"});*/
         return inf;
     }
 
 
     public static ArrayList<String[]> getSolicitudes(){
-        //System.out.println("ESTO SON SOLICITUDES"+solicitudes);
         return solicitudes;
 
     }
