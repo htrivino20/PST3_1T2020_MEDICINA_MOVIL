@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         //Referencias Lecturas datos Usuarios (Pacientes/Enfermeros)
         db_referenceUsu= FirebaseDatabase.getInstance().getReference().child("Usuarios");
         db_referenceSoli=FirebaseDatabase.getInstance().getReference().child(Variables.SOLICITUDES_FI);
-        db_referenceSensor=FirebaseDatabase.getInstance().getReference().child("Esp32");
+        db_referenceSensor=FirebaseDatabase.getInstance().getReference().child("Sensor");
         db_referenceNotificacion=FirebaseDatabase.getInstance().getReference().child("Solicitud");
 
 
@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<String[]> solicitarSolicitudes(){
-        //solicitudes.clear();
+        solicitudes.clear();
 
         final ArrayList<String[]> inf=new ArrayList<>();
         db_referenceSoli.addValueEventListener(new ValueEventListener() {

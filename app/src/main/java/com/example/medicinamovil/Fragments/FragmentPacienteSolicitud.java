@@ -98,7 +98,7 @@ public class FragmentPacienteSolicitud extends Fragment {
         adaptadorMedicamentos=new AdaptadorMedicamentos(view.getContext(), dataMedicina);
         listaMedicamentos.setAdapter(adaptadorMedicamentos);
         botonEnviarSolicitud=(Button)view.findViewById(R.id.botonEnviarSolicitud);
-        trackingEnvio();
+        //trackingEnvio();
 
         //SearchView
         searchView = (SearchView) view.findViewById(R.id.searchView);

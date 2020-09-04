@@ -22,8 +22,6 @@ public class Usuario {
 
     }
 
-
-
     public boolean equals(Object obj){
         if(obj!= null){
             if(obj instanceof Usuario){

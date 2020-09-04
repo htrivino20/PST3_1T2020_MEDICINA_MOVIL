@@ -78,7 +78,6 @@ public class FragmentEnfermeroSolicitud extends Fragment {
         }
 
 
-//AQUI ES DONDE SE CAE, ESPEREMOS APROBAR
         AdaptadorSolicitudes adaptadorSolicitudes = new AdaptadorSolicitudes(view.getContext(),info);
         listaRecordatorios.setAdapter(adaptadorSolicitudes);
         return view;
